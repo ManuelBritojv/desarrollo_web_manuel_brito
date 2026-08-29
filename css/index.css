@@ -1,0 +1,69 @@
+
+/*Seccion principal del home*/
+main{
+    display: flex;
+    flex-direction: column;
+    align-items:start;
+
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-grow: 1;
+}
+
+.title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+.title h1{
+    color: var(--color-primario-dark);
+}
+.title p{
+    color: var(--color-primario);
+}
+
+.welcome{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+}
+.welcome-text {
+    flex: 1; /*El texto usa todo el espacio posible*/
+}
+.welcome-text h2{
+    color: var(--color-primario-dark);
+}
+.welcome-text p, .welcome-text ul{
+    padding: 10px 0;
+    color: var(--color-primario);
+}
+.welcome-text li{
+    padding: 5px;
+}
+.welcome img {
+    width: 45%;         
+    max-width: 500px;   
+    border-radius: 15px;
+    object-fit: cover; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+@media (max-width: 768px) {
+    .welcome{
+        flex-direction: column;
+        align-items: center;
+    }
+    .welcome img{
+        width: 100%;
+    }
+}
+
+

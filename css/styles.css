@@ -1,0 +1,81 @@
+
+/*CSS Con Estilos de la barra de navegación y el footer*/
+
+:root{
+    --color-primario:#13a032;
+    --color-primario-dark: #058120;
+    --color-secundario:#e2e0e0; 
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: Arial;
+}
+
+
+/*Header y navegación*/
+
+header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+nav{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-secundario);
+    border-radius: 20px;
+    padding: 20px;
+    width: 80%;
+    max-width: 1200px;
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+nav a{
+    text-decoration: none;
+    color: var(--color-primario);
+    font-weight: bold; 
+    padding: 5px 15px;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.4s ease, color 0.4s ease;
+}
+nav a:hover {
+    border-color: var(--color-primario);
+}
+/*Footer*/
+footer{
+    text-align: center;
+    padding: 20px;
+    background-color: #666565;
+    color: #ffffff;
+
+    border-top: 2px solid #8a8a8a;
+}
+
+@media (max-width: 768px) {
+    nav {
+        width: 95%; 
+        padding: 15px 5px;
+    }
+    
+    nav ul {
+        flex-direction: column; 
+        align-items: center;
+        gap: 15px;
+    }
+}
