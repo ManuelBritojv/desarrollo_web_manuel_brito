@@ -1,0 +1,97 @@
+
+/*Estilos de registro de formularios*/
+
+.title h1{
+    color: var(--color-primario-dark);
+}
+.title p{
+    color: var(--color-primario);
+}
+.form-note{
+    color: var(--color-primario-dark);
+}
+.req {
+    color: red;
+}
+.form-container{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+form {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; 
+}
+
+fieldset {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    border: 2px solid var(--color-secundario);
+    border-radius: 15px;
+    background-color: #fcfcfc;
+    gap: 10px;
+}
+
+legend {
+    color: var(--color-primario-dark);
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0 15px;
+}
+
+label {
+    color: var(--color-primario);
+    font-weight: bold;
+    margin-top: 10px; 
+}
+
+input, select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--color-primario);
+}
+
+#button-submit {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-primario);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#button-submit:hover {
+    background-color: var(--color-primario-dark);
+}
+
+.error{
+    color: red;
+    font-size: 13px;
+    display: none;
+}
+.error.visible{
+    display: block;
+}
+
+.exito{
+    color: var(--color-primario);
+    font-size: 20px;
+    display: none;
+}
+.exito.visible{
+    display: block;
+}

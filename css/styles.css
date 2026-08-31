@@ -57,6 +57,19 @@ nav a{
 nav a:hover {
     border-color: var(--color-primario);
 }
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items:start;
+    width: 80%;
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    flex-grow: 1;
+}
+
 /*Footer*/
 footer{
     text-align: center;

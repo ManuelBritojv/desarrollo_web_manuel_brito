@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro: Unión de Ornitólogos de Chile</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/registro.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="registro.html">Registro de Voluntarios</a></li>
+                <li><a href="avistamiento.html">Informar Avistamiento</a></li>
+                <li><a href="listado.html">Listado de Avistamientos</a></li>
+                <li><a href="metricas.html">Indicadores y Métricas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="title">
+            <h1>Registro de Voluntarios</h1>
+            <p>Únete a nuestra red de observadores</p>
+        </section>
+        <section class="form-container">
+            <p class="form-note">Los campos marcados con <span class="req">(*)</span> son obligatorios.</p>
+            <form id="registro" action="#" method="POST">
+                <fieldset>
+
+                    <legend>Datos Personales y de Contacto</legend>
+                    
+                    <label for="nombre">Nombre completo <span class="req">(*)</span>:</label>
+                    <input type="text" id="nombre" name="nombre">
+                    <span class="error" id="error-nombre">Ingrese un nombre válido (Sin carácteres no letras)</span>
+
+                    <label for="email">Correo electrónico <span class="req">(*)</span>:</label>
+                    <input type="email" id="email" name="email">
+                    <span class="error" id="error-email">Ingrese un email valido.</span>
+
+                    <label for="telefono">Número de celular:</label>
+                    <input type="tel" id="telefono" name="telefono">
+                    <span class="error" id="error-tel">Ingrese un teléfono valido.</span>
+
+                </fieldset>
+                <fieldset>
+
+                    <legend>Dirección Postal</legend>
+
+                    <label for="region">Región <span class="req">(*)</span>:</label>
+                    <select id="region" name="region">
+                        <option value="">Seleccione una región...</option>
+                        <option value="arica-parinacota">Región de Arica y Parinacota</option>
+                        <option value="tarapaca">Región de Tarapacá</option>
+                        <option value="antofagasta">Región de Antofagasta</option>
+                        <option value="atacama">Región de Atacama</option>
+                        <option value="coquimbo">Región de Coquimbo</option>
+                        <option value="valparaiso">Región de Valparaíso</option>
+                        <option value="metropolitana">Región Metropolitana de Santiago</option>
+                        <option value="ohiggins">Región del Libertador Gral. Bernardo O'Higgins</option>
+                        <option value="maule">Región del Maule</option>
+                        <option value="nuble">Región de Ñuble</option>
+                        <option value="biobio">Región del Biobío</option>
+                        <option value="araucania">Región de La Araucanía</option>
+                        <option value="los-rios">Región de Los Ríos</option>
+                        <option value="los-lagos">Región de Los Lagos</option>
+                        <option value="aysen">Región Aysén del Gral. Carlos Ibáñez del Campo</option>
+                        <option value="magallanes">Región de Magallanes y de la Antártica Chilena</option>
+                    </select>
+                    <span class="error" id="error-region">Debe seleccionar una región</span>
+
+                    <label for="comuna">Comuna <span class="req">(*)</span>:</label>
+                    <select id="comuna" name="comuna" disabled>
+                        <option value="">Primero seleccione una región...</option>
+                    </select>
+                    <span class="error" id="error-comuna">Debe seleccionar una comuna</span>
+
+                    <label for="calle">Calle y número:</label>
+                    <input type="text" id="calle" name="calle">
+                </fieldset>
+                <button type="submit" id="button-submit">Registrar Voluntario</button>
+            </form>
+            <span class="exito" id="exito">¡Registro exitoso!</span>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
+    </footer>
+    <script type="module" src="../js/registro.js"></script>
+</body>
+</html>
