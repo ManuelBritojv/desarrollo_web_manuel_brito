@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Unión de Ornitólogos de Chile</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/formularios.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="registro.html">Registro de Voluntarios</a></li>
+                <li><a href="avistamiento.html">Informar Avistamiento</a></li>
+                <li><a href="listado.html">Listado de Avistamientos</a></li>
+                <li><a href="metricas.html">Indicadores y Métricas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="title">
+            <h1>Informar Nuevo Avistamiento</h1>
+            <p>Registra las aves que has observado en terreno</p>
+        </section>
+        <section class="form-container">
+            <p class="form-note">Los campos marcados con <span class="req">(*)</span> son obligatorios.</p>
+            <p id="exito" class="exito">¡Avistamiento registrado con éxito! Gracias por tu aporte.</p>
+            <form action="#" id="form-avistamiento" method="POST">
+                <fieldset>
+                        <legend>Datos del Observador y Ave</legend>
+                        
+                        <label for="email-observador">Tu Correo Electrónico <span class="req">(*)</span>:</label>
+                        <input type="email" id="email-observador" name="email-observador">
+                        <span class="error" id="error-email">Ingrese un correo válido.</span>
+
+                        <label for="fecha">Fecha y Hora del avistamiento <span class="req">(*)</span>:</label>
+                        <input type="datetime-local" id="fecha" name="fecha">
+                        <span class="error" id="error-fecha">.</span>
+
+                        <label for="tipo-ave">Tipo de ave <span class="req">(*)</span>:</label>
+                        <select id="tipo-ave" name="tipo-ave">
+                            <option value="">Seleccione un tipo...</option>
+                            <option value="rapaz">Ave Rapaz (Águilas, Cóndores, Halcones...)</option>
+                            <option value="acuatica">Ave Acuática (Patos, Cisnes, Garzas...)</option>
+                            <option value="marina">Ave Marina (Gaviotas, Pelícanos, Pingüinos...)</option>
+                            <option value="paseriforme">Ave Cantora/Pequeña (Zorzales, Loicas, Chincoles...)</option>
+                            <option value="otra">Otro tipo / No estoy seguro</option>
+                        </select>
+                        <span class="error" id="error-tipo">Debe seleccionar el tipo de ave.</span>
+
+                        <label for="nombre-ave">Nombre de la Especie <span class="req">(*)</span>:</label>
+                        <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej. Cóndor Andino">
+                        <span class="error" id="error-nombre-ave">Debe ingresar el nombre de la especie.</span>
+                </fieldset>
+                <fieldset>
+                        <legend>Ubicación y Evidencia</legend>
+
+                        <label for="region">Región <span class="req">(*)</span>:</label>
+                        <select id="region" name="region">
+                            <option value="">Seleccione una región...</option>
+                            <option value="arica-parinacota">Región de Arica y Parinacota</option>
+                            <option value="tarapaca">Región de Tarapacá</option>
+                            <option value="antofagasta">Región de Antofagasta</option>
+                            <option value="atacama">Región de Atacama</option>
+                            <option value="coquimbo">Región de Coquimbo</option>
+                            <option value="valparaiso">Región de Valparaíso</option>
+                            <option value="metropolitana">Región Metropolitana de Santiago</option>
+                            <option value="ohiggins">Región del Libertador Gral. Bernardo O'Higgins</option>
+                            <option value="maule">Región del Maule</option>
+                            <option value="nuble">Región de Ñuble</option>
+                            <option value="biobio">Región del Biobío</option>
+                            <option value="araucania">Región de La Araucanía</option>
+                            <option value="los-rios">Región de Los Ríos</option>
+                            <option value="los-lagos">Región de Los Lagos</option>
+                            <option value="aysen">Región Aysén del Gral. Carlos Ibáñez del Campo</option>
+                            <option value="magallanes">Región de Magallanes y de la Antártica Chilena</option>
+                        </select>
+                        <span class="error" id="error-region">Debe seleccionar una región.</span>
+
+                        <label for="comuna">Comuna <span class="req">(*)</span>:</label>
+                        <select id="comuna" name="comuna" disabled>
+                            <option value="">Primero seleccione una región...</option>
+                        </select>
+                        <span class="error" id="error-comuna">Debe seleccionar una comuna.</span>
+
+                        <label for="lugar">Lugar específico (Opcional):</label>
+                        <input type="text" id="lugar" name="lugar" placeholder="Ej. Humedal Batuco, Parque Araucano...">
+
+                        <label for="evidencia">Registro Fotográfico o Vídeo <span class="req">(*)</span>:</label>
+                        <input type="file" id="evidencia" name="evidencia">
+                        <span class="error" id="error-evidencia"></span>
+                </fieldset>
+                <button type="submit" id="button-submit">Registrar Avistamiento</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
+    </footer>
+    <script type="module" src="../js/avistamiento.js"></script>
+</body>
+</html>

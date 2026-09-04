@@ -78,7 +78,6 @@ form.addEventListener("submit", (event)=>{
     const errorRegion = document.getElementById("error-region");
     const comuna = document.getElementById("comuna").value;
     const errorComuna = document.getElementById("error-comuna");
-    console.log(exito.classList);
     
     // Si ya teniamos un mensaje de exito lo quitamos.
     if (exito.classList.contains("visible")){
