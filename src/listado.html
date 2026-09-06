@@ -28,7 +28,7 @@
             <p>Explora los registros reportados por nuestra red de observadores</p>
         </section>
 
-        <section class="filtros-seccion">
+        <div class="filtros-seccion"> <!-- Cambie de section a div, debido a que el validador no aceptaba section's sin h2-h6. Como esta caja espara css no hay problema -->
             <form action="#" class="filtros-form" method="GET">
                 <fieldset>
                     <legend>Opciones de visualización</legend>
@@ -54,9 +54,9 @@
                     <button type="button" id="button-aplicar">Aplicar Filtros</button>
                 </fieldset>
             </form>
-        </section>
+        </div>
 
-        <section class="tabla-seccion">
+        <div class="tabla-seccion"> <!-- Cambie de section a div, debido a que el validador no aceptaba section's sin h2-h6. Como esta caja es para css no hay problema -->
             <table id="tabla-avistamientos">
                 <caption>Registros recientes de aves observadas en territorio nacional</caption>
                 <thead>
@@ -205,11 +205,11 @@
                 </tbody>
                 
             </table>
-        </section>
+        </div>
 
         <nav class="paginacion">
             <ul>
-                <li><a href="#" aria-disabled="true">Anterior</a></li>
+                <li><a aria-disabled="true">Anterior</a></li>
                 <li><a href="#" aria-current="page">1</a></li>
                 <li><a href="#">2</a></li>
                 <li><a href="#">3</a></li>

@@ -115,13 +115,13 @@ function actualizarPaginacion() {
     // Crear botón "Anterior"
     const liAnterior = document.createElement("li");
     const aAnterior = document.createElement("a");
-    aAnterior.href = "#";
     aAnterior.textContent = "Anterior";
     
     if (paginaActual === 1) {
         // Si estamos en la página 1, lo deshabilitamos 
         aAnterior.setAttribute("aria-disabled", "true");
     } else {
+        aAnterior.href = "#";
         aAnterior.addEventListener("click", (e) => {
             e.preventDefault();
             paginaActual--; // Restamos 1 a la página actual
@@ -154,13 +154,13 @@ function actualizarPaginacion() {
     // Crear botón "Siguiente"
     const liSiguiente = document.createElement("li");
     const aSiguiente = document.createElement("a");
-    aSiguiente.href = "#";
     aSiguiente.textContent = "Siguiente";
     
     if (paginaActual === totalPaginas) {
         // Si estamos en la última página, lo deshabilitamos
         aSiguiente.setAttribute("aria-disabled", "true");
     } else {
+        aSiguiente.href = "#";
         aSiguiente.addEventListener("click", (e) => {
             e.preventDefault();
             paginaActual++; // Sumamos 1 a la página actual

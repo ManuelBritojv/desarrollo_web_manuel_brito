@@ -26,7 +26,7 @@
             <h1>Informar Nuevo Avistamiento</h1>
             <p>Registra las aves que has observado en terreno</p>
         </section>
-        <section class="form-container">
+        <div class="form-container"> <!-- Cambie de section a div, debido a que el validador no aceptaba section's sin h2-h6. Como esta caja es para css no hay problema -->
             <p class="form-note">Los campos marcados con <span class="req">(*)</span> son obligatorios.</p>
             <p id="exito" class="exito">¡Avistamiento registrado con éxito! Gracias por tu aporte.</p>
             <form action="#" id="form-avistamiento" method="POST">
@@ -96,7 +96,7 @@
                 </fieldset>
                 <button type="submit" id="button-submit">Registrar Avistamiento</button>
             </form>
-        </section>
+        </div>
     </main>
 
     <footer>
