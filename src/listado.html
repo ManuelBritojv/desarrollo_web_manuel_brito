@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Unión de Ornitólogos de Chile</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/listado.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="registro.html">Registro de Voluntarios</a></li>
+                <li><a href="avistamiento.html">Informar Avistamiento</a></li>
+                <li><a href="listado.html">Listado de Avistamientos</a></li>
+                <li><a href="metricas.html">Indicadores y Métricas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="title">
+            <h1>Listado de Avistamientos</h1>
+            <p>Explora los registros reportados por nuestra red de observadores</p>
+        </section>
+
+        <section class="filtros-seccion">
+            <form action="#" class="filtros-form" method="GET">
+                <fieldset>
+                    <legend>Opciones de visualización</legend>
+
+                    <label for="filtro-tipo">Tipo de ave:</label>
+                    <select name="filtro-tipo" id="filtro-tipo">
+                        <option value="todos">Todos los tipos</option>
+                        <option value="rapaz">Ave Rapaz (Águilas, Cóndores, Halcones...)</option>
+                        <option value="acuatica">Ave Acuática (Patos, Cisnes, Garzas...)</option>
+                        <option value="marina">Ave Marina (Gaviotas, Pelícanos, Pingüinos...)</option>
+                        <option value="cantora">Ave Cantora/Pequeña (Zorzales, Loicas, Chincoles...)</option>
+                        <option value="otra">Otro tipo</option>
+                    </select>
+
+                    <label for="ordenar-por">Ordenar por:</label>
+                    <select name="ordenar-por" id="ordenar-por">
+                        <option value="fecha-desc">Fecha (mas reciente primero)</option>
+                        <option value="fecha-asc">Fecha (mas antigua primero)</option>
+                        <option value="lugar-az">Lugar (A-Z)</option>
+                        <option value="lugar-za">Lugar (Z-A)</option>
+                        
+                    </select>
+                    <button type="button" id="button-aplicar">Aplicar Filtros</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <section class="tabla-seccion">
+            <table id="tabla-avistamientos">
+                <caption>Registros recientes de aves observadas en territorio nacional</caption>
+                <thead>
+                    <tr>
+                        <th>Fecha y Hora</th>
+                        <th>Tipo</th>
+                        <th>Especie</th>
+                        <th>Ubicación</th>
+                        <th>Evidencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-08-30 15:58</td>
+                        <td data-label="Tipo">Ave Rapaz</td>
+                        <td data-label="Especie">Cóndor Andino</td>
+                        <td data-label="Ubicación">Cajón del Maipo, Región Metropolitana</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-01 09:24</td>
+                        <td data-label="Tipo">Ave Rapaz</td>
+                        <td data-label="Especie">Águila Chilena</td>
+                        <td data-label="Ubicación">Parque Nacional La Campana, Región de Valparaíso</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-01 11:47</td>
+                        <td data-label="Tipo">Ave Marina</td>
+                        <td data-label="Especie">Pelícano Peruano</td>
+                        <td data-label="Ubicación">Bahía de Valparaíso, Región de Valparaíso</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-01 14:32</td>
+                        <td data-label="Tipo">Ave Acuática</td>
+                        <td data-label="Especie">Flamenco Chileno</td>
+                        <td data-label="Ubicación">Salar de Atacama, Región de Antofagasta</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-01 17:15</td>
+                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
+                        <td data-label="Especie">Chincol</td>
+                        <td data-label="Ubicación">Talagante, Región Metropolitana</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-02 08:05</td>
+                        <td data-label="Tipo">Ave Marina</td>
+                        <td data-label="Especie">Pingüino de Humboldt</td>
+                        <td data-label="Ubicación">Reserva Nacional Pingüino de Humboldt, Región de Coquimbo</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-02 10:36</td>
+                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
+                        <td data-label="Especie">Loica</td>
+                        <td data-label="Ubicación">Reserva Nacional Río Clarillo, Región Metropolitana</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-02 13:21</td>
+                        <td data-label="Tipo">Ave Rapaz</td>
+                        <td data-label="Especie">Peuco</td>
+                        <td data-label="Ubicación">Chillán, Región de Ñuble</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-02 16:48</td>
+                        <td data-label="Tipo">Ave Acuática</td>
+                        <td data-label="Especie">Cisne de Cuello Negro</td>
+                        <td data-label="Ubicación">Río Cruces, Región de Los Ríos</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-03 07:52</td>
+                        <td data-label="Tipo">Ave Marina</td>
+                        <td data-label="Especie">Gaviota Dominicana</td>
+                        <td data-label="Ubicación">Costanera de Concepción, Región del Biobío</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-03 12:18</td>
+                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
+                        <td data-label="Especie">Chucao</td>
+                        <td data-label="Ubicación">Parque Nacional Conguillío, Región de La Araucanía</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-05 11:42</td>
+                        <td data-label="Tipo">Otro tipo</td>
+                        <td data-label="Especie">Picaflor</td>
+                        <td data-label="Ubicación">La Serena, Región de Coquimbo</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-03 18:03</td>
+                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
+                        <td data-label="Especie">Diuca</td>
+                        <td data-label="Ubicación">San Fernando, Región de O'Higgins</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-04 08:27</td>
+                        <td data-label="Tipo">Ave Acuática</td>
+                        <td data-label="Especie">Tagua</td>
+                        <td data-label="Ubicación">Laguna del Inca, Región de Valparaíso</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-04 10:55</td>
+                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
+                        <td data-label="Especie">Zorzal</td>
+                        <td data-label="Ubicación">Valdivia, Región de Los Ríos</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-04 13:39</td>
+                        <td data-label="Tipo">Ave Marina</td>
+                        <td data-label="Especie">Cormorán Guanay</td>
+                        <td data-label="Ubicación">Arica, Región de Arica y Parinacota</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-04 16:22</td>
+                        <td data-label="Tipo">Ave Rapaz</td>
+                        <td data-label="Especie">Aguilucho</td>
+                        <td data-label="Ubicación">Puerto Natales, Región de Magallanes</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-04 17:51</td>
+                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
+                        <td data-label="Especie">Tenca</td>
+                        <td data-label="Ubicación">Curicó, Región del Maule</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Fecha y Hora">2026-09-04 19:14</td>
+                        <td data-label="Tipo">Ave Acuática</td>
+                        <td data-label="Especie">Garza Grande</td>
+                        <td data-label="Ubicación">Lago Llanquihue, Región de Los Lagos</td>
+                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </section>
+
+        <nav class="paginacion">
+            <ul>
+                <li><a href="#" aria-disabled="true">Anterior</a></li>
+                <li><a href="#" aria-current="page">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">Siguiente</a></li>
+            </ul>
+        </nav>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
+    </footer>
+    <script type="module" src="../js/listado.js"></script>
+</body>
+</html>
