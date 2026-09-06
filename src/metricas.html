@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Unión de Ornitólogos de Chile</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/metricas.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="registro.html">Registro de Voluntarios</a></li>
+                <li><a href="avistamiento.html">Informar Avistamiento</a></li>
+                <li><a href="listado.html">Listado de Avistamientos</a></li>
+                <li><a href="metricas.html">Indicadores y Métricas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="title">
+            <h1>Indicadores y Métricas</h1>
+            <p>Resumen estadístico de nuestra red de voluntarios y registros de aves</p>
+        </section>
+        <section class="resumen-seccion">
+            <article class="dato-resumen">
+                <h2 class="resumen-numero">1,245</h2>
+                <p class="resumen-texto">Voluntarios Registrados</p>
+            </article>
+            <article class="dato-resumen">
+                <h2 class="resumen-numero">8,430</h2>
+                <p class="resumen-texto">Avistamientos Totales</p>
+            </article>
+            <article class="dato-resumen">
+                <h2 class="resumen-numero">15</h2>
+                <p class="resumen-texto">Regiones Activas</p>
+            </article>
+        </section>
+
+        <section class="graficos-seccion">
+            <figure class="grafico-contenedor">
+                <figcaption>Avistamientos por Tipo de Ave</figcaption>
+                <ul class="grafico-barras">
+                    <li class="rapaces">
+                        <span class="etiqueta">Rapaces</span>
+                        <div class="barra-pista"><div class="barra-relleno"></div></div> <!-- div necesario para la barra-->
+                        <span class="valor">85%</span>
+                    </li>
+                    <li class="acuaticas">
+                        <span class="etiqueta">Acuáticas</span>
+                        <div class="barra-pista"><div class="barra-relleno"></div></div> <!-- div necesario para la barra-->
+                        <span class="valor">60%</span>
+                    </li>
+                    <li class="marinas">
+                        <span class="etiqueta">Marinas</span>
+                        <div class="barra-pista"><div class="barra-relleno"></div></div> <!-- div necesario para la barra-->
+                        <span class="valor">45%</span>
+                    </li>
+                    <li class="cantoras">
+                        <span class="etiqueta">Cantoras</span>
+                        <div class="barra-pista"><div class="barra-relleno"></div></div> <!-- div necesario para la barra-->
+                        <span class="valor">90%</span>
+                    </li>
+                </ul>
+            </figure>
+
+            <figure class="grafico-contenedor">
+                <figcaption>Voluntarios por Zona Geográfica</figcaption>
+                <div class="grafico-circular"></div>
+                
+                <ul class="leyenda-circular">
+                    <li><span class="color-box zona-norte"></span> Zona Norte (25%)</li>
+                    <li><span class="color-box zona-centro"></span> Zona Centro (55%)</li>
+                    <li><span class="color-box zona-sur"></span> Zona Sur (20%)</li>
+                </ul>
+            </figure>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

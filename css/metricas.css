@@ -1,0 +1,185 @@
+
+/* Estilo de metricas*/
+
+.title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+.title h1{
+    color: var(--color-primario-dark);
+}
+.title p{
+    color: var(--color-primario);
+}
+
+/* Resumenes de datos*/
+
+.resumen-seccion{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+}
+.dato-resumen{
+    flex: 1;
+    min-width: 200px;
+    background-color: #f8f9fa;
+    border: 2px solid var(--color-secundario);
+    border-radius: 10px;
+    padding: 25px 15px;
+    text-align: center;
+}
+.resumen-numero {
+    font-size: 30px;
+    color: var(--color-primario);
+    margin-bottom: 5px;
+}
+.resumen-texto {
+    font-weight: bold;
+    color: #666;
+    font-size: 15px;
+}
+
+/* Graficos */
+
+/* Contenedores de los graficos */
+.graficos-seccion{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+}
+.grafico-contenedor{
+    flex: 1;
+    background-color: #fff;
+    border: 2px solid var(--color-secundario);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.grafico-contenedor figcaption {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--color-primario-dark);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-secundario);
+}
+
+/* Grafico de barras */
+.grafico-barras {
+    flex: 1;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.grafico-barras li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.grafico-barras .etiqueta {
+    width: 80px;
+    font-weight: bold;
+    color: var(--color-primario-dark);
+    text-align: right;
+}
+.grafico-barras .barra-pista {
+    flex: 1;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    height: 20px;
+}
+.grafico-barras .barra-relleno {
+    height: 100%;
+    border-radius: 20px;
+}
+
+/* Rellenos de las barras */
+.rapaces .barra-relleno{
+    background-color: #cc0a0a; 
+    width: 85%;
+}
+.acuaticas .barra-relleno{
+    background-color: #dfdb06; 
+    width: 60%;
+}
+.marinas .barra-relleno{
+    background-color: #2009a1; 
+    width: 45%;
+}
+.cantoras .barra-relleno{
+    background-color: #0ab921; 
+    width: 90%;
+}
+
+/* Grafico de Torta */
+.grafico-circular {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px auto;
+    border-radius: 50%;
+    /* Conic Gradient crea el gráfico de torta 
+       Norte: 25% | Centro: 55% | Sur: 20% */
+    background: conic-gradient(
+        #fa7d16 0% 25%, 
+        #328d3e 25% 80%, 
+        #0484b6 80% 100%
+    );
+}
+
+.leyenda-circular {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.leyenda-circular li {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #555;
+}
+
+.color-box {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+}
+
+.zona-norte { background-color: #fa7d16; }
+.zona-centro { background-color: #328d3e; }
+.zona-sur { background-color: #0484b6; }
+
+
+@media (max-width: 768px) {
+    main{
+        width: 90%;
+        padding: 10px;
+        margin: 5px auto;
+    }
+    .graficos-seccion{
+        flex-direction: column;
+    }
+    .grafico-barras{
+        gap: 15px;
+    }
+}
+
+
