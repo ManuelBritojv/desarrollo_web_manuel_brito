@@ -1,0 +1,224 @@
+
+/* Estilos de listado*/
+
+/* Encabezado */
+.title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+.title h1{
+    color: var(--color-primario-dark);
+}
+.title p{
+    color: var(--color-primario);
+}
+
+/* Filtros */
+
+.filtros-seccion {
+    max-width: 1000px;
+    margin: 0 auto 30px auto; /* Centra el filtro*/
+}
+
+.filtros-form fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 25px;
+    background-color: #f8f9fa;
+    border: 2px solid var(--color-secundario, #40916c);
+    border-radius: 10px;
+}
+
+.filtros-form legend {
+    font-weight: bold;
+    color: var(--color-primario, #1b4332);
+    padding: 0 10px;
+}
+
+.filtros-form label {
+    font-weight: bold;
+    color: #333;
+}
+
+.filtros-form select {
+    width: 20%; /* Uso 20% en especifico para que no se vea tan raro con el flex-wrap*/
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    flex-grow: 1; 
+    min-width: 150px;
+}
+
+#button-aplicar {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-primario);
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#button-aplicar:hover {
+    background-color: var(--color-primario-dark);
+}
+
+/* Seccion de la tabla con los datos*/
+main{
+    gap: 10px; /* Para esta página reduzco el gap entre las etiquetas de main*/
+}
+.tabla-seccion {
+    max-width: 1000px;
+    width: 100%;
+}
+
+#tabla-avistamientos {
+    width: 100%; 
+    border-collapse: collapse;
+    table-layout: fixed; /* Distribuye el espacio de las columnas equitativamente */
+    background-color: #fff;
+    border: 1px solid var(--color-secundario);
+}
+
+#tabla-avistamientos caption {
+    caption-side: bottom;
+    text-align: right;
+    font-size: 13px;
+    color: #6c757d;
+    padding: 10px 0;
+}
+
+#tabla-avistamientos th,
+#tabla-avistamientos td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #eaeaea;
+}
+
+#tabla-avistamientos th {
+    color: #ffffff;
+    background-color: var(--color-primario); 
+}
+
+#tabla-avistamientos a{
+    color: var(--color-primario);
+    font-weight: bold;
+    text-decoration: none;
+}
+#tabla-avistamientos a:hover{
+    color: var(--color-primario-dark);
+    font-weight: bold;
+    text-decoration: underline;
+}
+/* Ya tenia un estilo para <nav> de styles.css */
+/* Para la paginacion sobreescribo algunas cosas */
+.paginacion {
+    background-color: transparent; /* Quito el fondo gris*/
+    padding: 0; /* Quitamos el padding global */
+    width: 100%;                   
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.paginacion ul {
+    gap: 8px; /* Cambiamos el gap de 50px a solo 8px */
+}
+
+/* Reseteamos los enlaces para que parezcan botones cuadrados */
+.paginacion a {
+    background-color: #fff;
+    color: var(--color-primario);
+    padding: 8px 16px;
+    border: 1px solid #ccc; /* Les damos un borde de botón */
+    border-radius: 6px; /* Bordes levemente redondeados */
+    font-weight: bold;
+    text-decoration: none;
+    /* Sobrescribo el border-bottom transparente del nav global */
+    border-bottom: 1px solid #ccc !important; 
+}
+
+/* Efecto hover normal */
+.paginacion a:hover:not([aria-disabled="true"]):not([aria-current="page"]) {
+    background-color: #e8f5e9;
+    border-color: var(--color-primario) !important;
+    color: var(--color-primario-dark);
+}
+
+/* Estilo para la página actual (ej: el "1") */
+.paginacion a[aria-current="page"] {
+    background-color: var(--color-primario);
+    color: #ffffff;
+    border-color: var(--color-primario) !important;
+    cursor: default;
+}
+
+/* Estilo para el botón deshabilitado (ej: "Anterior" en la pag 1) */
+.paginacion a[aria-disabled="true"] {
+    color: #adb5bd;
+    background-color: #f8f9fa;
+    border-color: #e9ecef !important;
+    pointer-events: none; /* Evita el clic */
+}
+
+@media (max-width: 768px) {
+    #tabla-avistamientos{
+        border: none;
+    }
+    #tabla-avistamientos caption{
+        width: 100%;
+        text-align: center;
+        padding: 0 0 20px 0;
+        font-size: 15px;
+        color: #6c757d;
+    }
+    /* Fuerzo a que la tabla se comporte como bloques normales */
+    #tabla-avistamientos, 
+    #tabla-avistamientos thead, 
+    #tabla-avistamientos tbody, 
+    #tabla-avistamientos th, 
+    #tabla-avistamientos td, 
+    #tabla-avistamientos tr {
+        display: block; 
+    }
+
+    /* Oculto la fila de la cabecera original (<thead>) */
+    #tabla-avistamientos thead tr {
+        display: none;
+    }
+
+    /* Cada fila (<tr>) se convierte en una Tarjeta separada*/
+    #tabla-avistamientos tr {
+        margin-bottom: 20px;
+        border: 2px solid var(--color-secundario);
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    /* Estilos de la celda individual dentro de la tarjeta */
+    #tabla-avistamientos td {
+        position: relative; /* Posicion relativa a la original para mantener el centrado*/
+        text-align: right; /* Alineamos el valor a la derecha */
+        padding-left: 45%; /* Dejamos espacio a la izquierda para el título */
+        border-bottom: 1px solid #eee;
+    }
+    /* Usamos ::before y attr() para inyectar el título desde el HTML */
+    #tabla-avistamientos td::before {
+        content: attr(data-label); /* Extrae el texto del HTML */
+        position: absolute; /* Con Pos Absoluta lo dejamos fijo*/
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+        color: var(--color-primario-dark);
+    }
+    .paginacion ul {
+        gap: 30px;
+    }
+}
