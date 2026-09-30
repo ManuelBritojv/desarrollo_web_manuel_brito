@@ -55,7 +55,7 @@ class Avistamiento(Base):
     ave_id: Mapped[int] = mapped_column(ForeignKey('ave.id'))
     fecha_hora: Mapped[datetime] = mapped_column()
     lugar: Mapped[str] = mapped_column(String(200))
-    descripcion: Mapped[str] = mapped_column(String(500))
+    descripcion: Mapped[str | None] = mapped_column(String(500))
 
     # Relaciones
     voluntario: Mapped['Voluntario'] = relationship(back_populates='avistamientos') # Un avistamiento fue hecho por un voluntario
@@ -72,3 +72,22 @@ class Registro(Base):
 
     # Relaciones
     avistamiento : Mapped['Avistamiento'] = relationship(back_populates='registros') # Un registro pertenece a un avistamiento
+
+
+#--- Consultas ---
+
+def agregar_voluntario(session, nombre, email, telefono, comuna_id):
+    voluntario = Voluntario(
+        nombre=nombre,
+        email=email,
+        telefono=telefono.replace(" ", ""),
+        fecha_registro=datetime.now(),
+        comuna_id=comuna_id,
+    )
+    try:
+        session.add(voluntario)
+        session.commit()
+        return voluntario.id
+    except Exception as e:
+        session.rollback()
+        return None

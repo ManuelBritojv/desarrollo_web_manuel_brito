@@ -28,21 +28,37 @@
         </section>
         <div class="form-container"> <!-- Cambie de section a div, debido a que el validador no aceptaba section's sin h2-h6. Como esta caja es para css no hay problema -->
             <p class="form-note">Los campos marcados con <span class="req">(*)</span> son obligatorios.</p>
-            <form id="registro" action="#" method="POST">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            {% if exito %}
+                <p class="flash_exito">¡Registro exitoso! Ya eres parte de nuestra red de observadores.</p>
+                <div class="acciones">
+                    <a class="boton_exito_avistamiento" href="{{ url_for('avistamiento', voluntario=voluntario_id) }}">Registrar un avistamiento</a>
+                    <a class="boton_exito_inicio" href="{{ url_for('index') }}">Volver al inicio</a>
+                </div>
+            {% else %}
+                <form id="registro" action="/registro" method="POST">
                 <fieldset>
 
                     <legend>Datos Personales y de Contacto</legend>
                     
                     <label for="nombre">Nombre completo <span class="req">(*)</span>:</label>
-                    <input type="text" id="nombre" name="nombre">
+                    <input type="text" id="nombre" name="nombre" value="{{ request.form.get('nombre', '') }}">
                     <span class="error" id="error-nombre">Ingrese un nombre válido (Sin carácteres no letras)</span>
 
                     <label for="email">Correo electrónico <span class="req">(*)</span>:</label>
-                    <input type="email" id="email" name="email">
+                    <input type="email" id="email" name="email" value="{{ request.form.get('email', '') }}">
                     <span class="error" id="error-email">Ingrese un email valido.</span>
 
                     <label for="telefono">Número de celular:</label>
-                    <input type="tel" id="telefono" name="telefono">
+                    <input type="tel" id="telefono" name="telefono" value="{{ request.form.get('telefono', '') }}">
                     <span class="error" id="error-tel">Ingrese un teléfono valido.</span>
 
                 </fieldset>
@@ -53,44 +69,35 @@
                     <label for="region">Región <span class="req">(*)</span>:</label>
                     <select id="region" name="region">
                         <option value="">Seleccione una región...</option>
-                        <option value="arica-parinacota">Región de Arica y Parinacota</option>
-                        <option value="tarapaca">Región de Tarapacá</option>
-                        <option value="antofagasta">Región de Antofagasta</option>
-                        <option value="atacama">Región de Atacama</option>
-                        <option value="coquimbo">Región de Coquimbo</option>
-                        <option value="valparaiso">Región de Valparaíso</option>
-                        <option value="metropolitana">Región Metropolitana de Santiago</option>
-                        <option value="ohiggins">Región del Libertador Gral. Bernardo O'Higgins</option>
-                        <option value="maule">Región del Maule</option>
-                        <option value="nuble">Región de Ñuble</option>
-                        <option value="biobio">Región del Biobío</option>
-                        <option value="araucania">Región de La Araucanía</option>
-                        <option value="los-rios">Región de Los Ríos</option>
-                        <option value="los-lagos">Región de Los Lagos</option>
-                        <option value="aysen">Región Aysén del Gral. Carlos Ibáñez del Campo</option>
-                        <option value="magallanes">Región de Magallanes y de la Antártica Chilena</option>
+                        {% for region in regiones %}
+                            <option value="{{ region.id }}" {% if request.form.get('region') == region.id|string %}selected{% endif %}>{{ region.nombre }}</option>
+                        {% endfor %}
                     </select>
                     <span class="error" id="error-region">Debe seleccionar una región</span>
 
                     <label for="comuna">Comuna <span class="req">(*)</span>:</label>
-                    <select id="comuna" name="comuna" disabled>
+                    <select id="comuna" name="comuna" disabled data-seleccionada="{{ request.form.get('comuna', '') }}">
                         <option value="">Primero seleccione una región...</option>
+                        {% for comuna in comunas %}
+                            <option value="{{comuna.id}}" data-region="{{comuna.region_id}}" style="display: none;">{{comuna.nombre}}</option>
+                        {% endfor%}
                     </select>
                     <span class="error" id="error-comuna">Debe seleccionar una comuna</span>
 
-                    <label for="calle">Calle y número:</label>
-                    <input type="text" id="calle" name="calle">
                 </fieldset>
                 <button type="submit" id="button-submit">Registrar Voluntario</button>
-            </form>
-            <span class="exito" id="exito">¡Registro exitoso!</span>
+                </form>
+            {% endif%}
         </div>
-
     </main>
 
     <footer>
         <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
     </footer>
-    <script src="{{ url_for('static', filename='js/registro.js') }}"></script>
+    <!-- Carga el script solo cuando el formulario existe. Si no, registro.js intenta hacer region.addEventListener
+    sobre null y lanza un error en consola.-->
+    {% if not exito %}
+        <script src="{{ url_for('static', filename='js/registro.js') }}"></script>
+    {% endif %}
 </body>
 </html>

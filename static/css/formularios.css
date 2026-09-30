@@ -88,17 +88,78 @@ input:focus, select:focus {
     display: block;
 }
 
-.exito{
-    color: var(--color-primario);
-    font-size: 20px;
-    display: none;
-}
-.exito.visible{
+.flash_error {
+    color: red;
+    font-size: 13px;
     display: block;
 }
-@media (max-width: 768px) {
 
-    main {
-        padding: 10px;
+/* --- ESTILOS PANTALLA DE ÉXITO --- */
+
+.flash_exito {
+    color: var(--color-primario-dark);
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: var(--color-secundario);
+    border: 2px solid var(--color-primario);
+    border-radius: 15px;
+}
+
+.acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto; /* Centra el contenedor en la pantalla */
+}
+
+.boton_exito_avistamiento, 
+.boton_exito_inicio {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.boton_exito_avistamiento {
+    background-color: var(--color-primario);
+    color: white;
+    border: 2px solid var(--color-primario);
+}
+
+.boton_exito_avistamiento:hover {
+    background-color: var(--color-primario-dark);
+    border-color: var(--color-primario-dark);
+}
+
+.boton_exito_inicio {
+    background-color: transparent;
+    color: var(--color-primario);
+    border: 2px solid var(--color-primario);
+}
+
+.boton_exito_inicio:hover {
+    background-color: var(--color-secundario);
+    color: var(--color-primario-dark);
+}
+
+@media (min-width: 768px) {
+    .acciones {
+        flex-direction: row;
     }
+    
+    .boton_exito_avistamiento, 
+    .boton_exito_inicio {
+        flex: 1; /* Ambos botones toman el 50% del espacio */
+    }
+}
+
+@media (max-width: 768px) {
+    main { padding: 10px; }
 }

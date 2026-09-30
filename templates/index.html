@@ -40,8 +40,23 @@
             </div>
             <img src="{{ url_for('static', filename='img/pexels-magda-ehlers-pexels-6819006.jpg') }}" alt="pajaroHome">     
         </section>
+        <section class="recientes-avistamientos">
+            <h2>Últimos Avistamientos</h2>
+            {% if avistamientos %}
+                <ul>
+                    {% for avistamiento in avistamientos %}
+                        <li>
+                            <strong>{{ avistamiento.fecha_hora.strftime('%d-%m-%Y %H:%M') }}</strong>: 
+                            Se observó un(a) <strong>{{ avistamiento.ave.nombre }}</strong> 
+                            en {{ avistamiento.lugar }} ({{ avistamiento.voluntario.comuna.nombre }}).
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Aún no hay avistamientos registrados en el sistema.</p>
+            {% endif %}
+        </section>
     </main>
-
     <footer>
         <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
     </footer>

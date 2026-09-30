@@ -1,26 +1,33 @@
-import { comunasPorRegion } from "./comunas.js";
 
 const region = document.getElementById("region");
 const comuna = document.getElementById("comuna");
 
-region.addEventListener("change", function(){ // Logica del sistema Región-Comuna
-    const regionSeleccionada = this.value;
-    comuna.innerHTML = '<option value="">Seleccione una comuna...</option>';
-    if(regionSeleccionada !== ""){  // Si seleccionamos una región
-        comuna.disabled = false; // Ahora podemos interactuar con el select de comunas
-        const comunas = comunasPorRegion[regionSeleccionada];
-        for(let i = 0; i < comunas.length; i++){
-            const opcion = document.createElement("option");
-            opcion.value = comunas[i].toLowerCase().replaceAll(" ", "-");
-            opcion.textContent = comunas[i];
-            comuna.appendChild(opcion);
+region.addEventListener("change", function(){ // Logica del sistema Región-Comuna (Ahora con BD)
+    const regionIdSeleccionada = this.value;
+    comuna.value = ""
+    const opcionesComuna = comuna.querySelectorAll('option:not([value=""])') // Todos los hijos tal que la opcion no sea ""
+    const opcionDefault = comuna.querySelector('option[value=""]') // la opcion <option value="">Primero seleccione una región...</option>
+    if (regionIdSeleccionada !== ""){ // Si hay alguna region seleccionada
+        comuna.disabled = false;
+        opcionDefault.textContent = 'Seleccione una comuna...' // Cambiamos el texto
+        for(let i = 0; i < opcionesComuna.length; i++){
+            let opcion = opcionesComuna[i]
+            // dataset permite acceder a etiquetas pers. estilo data-xxx
+            // Si encontramos la region que necesitamos.
+            if(opcion.dataset.region == regionIdSeleccionada){
+                opcion.style.display = 'block' // Las mostramos
+            }else{
+                opcion.style.display = 'none' // No las mostramos
+            }
         }
-    }else{
+    } else{ // Si no tenemos una region seleccionada.
         comuna.disabled = true;
-        comuna.innerHTML = '<option value="">Primero seleccione una región...</option>';
+        opcionDefault.textContent = 'Primero seleccione una región...' // Cambiamos el texto
+        for(let i = 0; i < opcionesComuna.length; i++){
+            opcionesComuna[i].style.display = 'none' // No las mostramos
+        }
     }
 });
-
 
 // Validaciones del formulario
 // Funciones auxiliares.
@@ -65,25 +72,18 @@ function esNumeroValido(numero){
 const form = document.getElementById("registro");
 
 form.addEventListener("submit", (event)=>{
-    event.preventDefault();
     let esValido = true;
-    const exito = document.getElementById("exito");
     const nombre = document.getElementById("nombre").value;
     const errorNombre = document.getElementById("error-nombre");
     const correo = document.getElementById("email").value;
     const errorCorreo = document.getElementById("error-email");
     const telefono = document.getElementById("telefono").value;
     const errorTelefono = document.getElementById("error-tel");
-    const region = document.getElementById("region").value;
+    const regionValor = document.getElementById("region").value;
     const errorRegion = document.getElementById("error-region");
-    const comuna = document.getElementById("comuna").value;
+    const comunaValor = document.getElementById("comuna").value;
     const errorComuna = document.getElementById("error-comuna");
     
-    // Si ya teniamos un mensaje de exito lo quitamos.
-    if (exito.classList.contains("visible")){
-        exito.classList.remove("visible");
-    }
-        
     // Validaciones del nombre.
     if (nombre.trim() === "" || !esNombreValido(nombre.trim())){
         errorNombre.classList.add("visible");
@@ -110,28 +110,25 @@ form.addEventListener("submit", (event)=>{
 
     // Validacion de las regiones y comunas.
 
-    if(region === ""){
+    if(regionValor === ""){
         errorRegion.classList.add("visible");
         esValido = false;
     }else{
         errorRegion.classList.remove("visible");
     }
-    if(comuna === ""){
+    if(comunaValor === ""){
         errorComuna.classList.add("visible");
         esValido = false;
     }else{
         errorComuna.classList.remove("visible");
     }
-    
-
-    // Si paso todas las validaciones muestro un mensaje.
-    if (esValido){
-        exito.classList.add("visible");
-        form.reset();
-        // Vuelvo a desactivar el campo de comunas.
-        const selectComuna = document.getElementById("comuna");
-        selectComuna.disabled = true;
-        selectComuna.innerHTML = '<option value="">Primero seleccione una región...</option>';
+    if (!esValido) {
+        // NOTA: Si quieren ver las validaciones de Flask comenten la linea de abajo.
+        event.preventDefault(); // solo bloqueamos el envío si hay errores
     }
-
 });
+// Lanzamos un evento, como si hubieramos hecho un change en la region (Para poder mantener la comuna)
+if (region.value !== "") {
+    region.dispatchEvent(new Event("change"));  // habilita la comuna y filtra las opciones
+    comuna.value = comuna.dataset.seleccionada;
+}
