@@ -28,192 +28,53 @@
             <p>Explora los registros reportados por nuestra red de observadores</p>
         </section>
 
-        <div class="filtros-seccion"> <!-- Cambie de section a div, debido a que el validador no aceptaba section's sin h2-h6. Como esta caja espara css no hay problema -->
-            <form action="#" class="filtros-form" method="GET">
-                <fieldset>
-                    <legend>Opciones de visualización</legend>
-
-                    <label for="filtro-tipo">Tipo de ave:</label>
-                    <select name="filtro-tipo" id="filtro-tipo">
-                        <option value="todos">Todos los tipos</option>
-                        <option value="rapaz">Ave Rapaz (Águilas, Cóndores, Halcones...)</option>
-                        <option value="acuatica">Ave Acuática (Patos, Cisnes, Garzas...)</option>
-                        <option value="marina">Ave Marina (Gaviotas, Pelícanos, Pingüinos...)</option>
-                        <option value="cantora">Ave Cantora/Pequeña (Zorzales, Loicas, Chincoles...)</option>
-                        <option value="otra">Otro tipo</option>
-                    </select>
-
-                    <label for="ordenar-por">Ordenar por:</label>
-                    <select name="ordenar-por" id="ordenar-por">
-                        <option value="fecha-desc">Fecha (mas reciente primero)</option>
-                        <option value="fecha-asc">Fecha (mas antigua primero)</option>
-                        <option value="lugar-az">Lugar (A-Z)</option>
-                        <option value="lugar-za">Lugar (Z-A)</option>
-                        
-                    </select>
-                    <button type="button" id="button-aplicar">Aplicar Filtros</button>
-                </fieldset>
-            </form>
-        </div>
-
         <div class="tabla-seccion"> <!-- Cambie de section a div, debido a que el validador no aceptaba section's sin h2-h6. Como esta caja es para css no hay problema -->
             <table id="tabla-avistamientos">
                 <caption>Registros recientes de aves observadas en territorio nacional</caption>
                 <thead>
                     <tr>
                         <th>Fecha y Hora</th>
-                        <th>Tipo</th>
                         <th>Especie</th>
                         <th>Ubicación</th>
+                        <th>Observado por</th>
                         <th>Evidencia</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-08-30 15:58</td>
-                        <td data-label="Tipo">Ave Rapaz</td>
-                        <td data-label="Especie">Cóndor Andino</td>
-                        <td data-label="Ubicación">Cajón del Maipo, Región Metropolitana</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
+                    {% for a in avistamientos %}
+                    <tr data-href="{{ url_for('detalle', avistamiento_id=a.id) }}">
+                        <td data-label="Fecha y Hora">{{ a.fecha_hora.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td data-label="Especie">{{ a.ave.nombre }}</td>
+                        <td data-label="Ubicación">{{ a.lugar }}</td>
+                        <td data-label="Observado por">{{ a.voluntario.nombre }}</td>
+                        <td data-label="Evidencia"><a href="{{ url_for('detalle', avistamiento_id=a.id) }}">Ver detalle</a></td>
                     </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-01 09:24</td>
-                        <td data-label="Tipo">Ave Rapaz</td>
-                        <td data-label="Especie">Águila Chilena</td>
-                        <td data-label="Ubicación">Parque Nacional La Campana, Región de Valparaíso</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-01 11:47</td>
-                        <td data-label="Tipo">Ave Marina</td>
-                        <td data-label="Especie">Pelícano Peruano</td>
-                        <td data-label="Ubicación">Bahía de Valparaíso, Región de Valparaíso</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-01 14:32</td>
-                        <td data-label="Tipo">Ave Acuática</td>
-                        <td data-label="Especie">Flamenco Chileno</td>
-                        <td data-label="Ubicación">Salar de Atacama, Región de Antofagasta</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-01 17:15</td>
-                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
-                        <td data-label="Especie">Chincol</td>
-                        <td data-label="Ubicación">Talagante, Región Metropolitana</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-02 08:05</td>
-                        <td data-label="Tipo">Ave Marina</td>
-                        <td data-label="Especie">Pingüino de Humboldt</td>
-                        <td data-label="Ubicación">Reserva Nacional Pingüino de Humboldt, Región de Coquimbo</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-02 10:36</td>
-                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
-                        <td data-label="Especie">Loica</td>
-                        <td data-label="Ubicación">Reserva Nacional Río Clarillo, Región Metropolitana</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-02 13:21</td>
-                        <td data-label="Tipo">Ave Rapaz</td>
-                        <td data-label="Especie">Peuco</td>
-                        <td data-label="Ubicación">Chillán, Región de Ñuble</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-02 16:48</td>
-                        <td data-label="Tipo">Ave Acuática</td>
-                        <td data-label="Especie">Cisne de Cuello Negro</td>
-                        <td data-label="Ubicación">Río Cruces, Región de Los Ríos</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-03 07:52</td>
-                        <td data-label="Tipo">Ave Marina</td>
-                        <td data-label="Especie">Gaviota Dominicana</td>
-                        <td data-label="Ubicación">Costanera de Concepción, Región del Biobío</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-03 12:18</td>
-                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
-                        <td data-label="Especie">Chucao</td>
-                        <td data-label="Ubicación">Parque Nacional Conguillío, Región de La Araucanía</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-05 11:42</td>
-                        <td data-label="Tipo">Otro tipo</td>
-                        <td data-label="Especie">Picaflor</td>
-                        <td data-label="Ubicación">La Serena, Región de Coquimbo</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-03 18:03</td>
-                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
-                        <td data-label="Especie">Diuca</td>
-                        <td data-label="Ubicación">San Fernando, Región de O'Higgins</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-04 08:27</td>
-                        <td data-label="Tipo">Ave Acuática</td>
-                        <td data-label="Especie">Tagua</td>
-                        <td data-label="Ubicación">Laguna del Inca, Región de Valparaíso</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-04 10:55</td>
-                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
-                        <td data-label="Especie">Zorzal</td>
-                        <td data-label="Ubicación">Valdivia, Región de Los Ríos</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-04 13:39</td>
-                        <td data-label="Tipo">Ave Marina</td>
-                        <td data-label="Especie">Cormorán Guanay</td>
-                        <td data-label="Ubicación">Arica, Región de Arica y Parinacota</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-04 16:22</td>
-                        <td data-label="Tipo">Ave Rapaz</td>
-                        <td data-label="Especie">Aguilucho</td>
-                        <td data-label="Ubicación">Puerto Natales, Región de Magallanes</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-04 17:51</td>
-                        <td data-label="Tipo">Ave Cantora/Pequeña</td>
-                        <td data-label="Especie">Tenca</td>
-                        <td data-label="Ubicación">Curicó, Región del Maule</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
-                    <tr>
-                        <td data-label="Fecha y Hora">2026-09-04 19:14</td>
-                        <td data-label="Tipo">Ave Acuática</td>
-                        <td data-label="Especie">Garza Grande</td>
-                        <td data-label="Ubicación">Lago Llanquihue, Región de Los Lagos</td>
-                        <td data-label="Evidencia"><a href="#">Ver Evidencia</a></td>
-                    </tr>
+                    {% else %}
+                    <tr><td colspan="5">Aún no hay avistamientos registrados.</td></tr>
+                    {% endfor %}
                 </tbody>
                 
             </table>
         </div>
-
         <nav class="paginacion">
             <ul>
-                <li><a aria-disabled="true">Anterior</a></li>
-                <li><a href="#" aria-current="page">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">Siguiente</a></li>
+                <li>
+                    {% if pagina > 1 %}
+                    <a href="{{ url_for('listado', pagina=pagina-1) }}">Anterior</a>
+                    {% else %}
+                    <a aria-disabled="true">Anterior</a>
+                    {% endif %}
+                </li>
+                {% for n in range(1, total_paginas + 1) %}
+                <li><a href="{{ url_for('listado', pagina=n) }}" {% if n == pagina %}aria-current="page"{% endif %}>{{ n }}</a></li>
+                {% endfor %}
+                <li>
+                    {% if pagina < total_paginas %}
+                    <a href="{{ url_for('listado', pagina=pagina+1) }}">Siguiente</a>
+                    {% else %}
+                    <a aria-disabled="true">Siguiente</a>
+                    {% endif %}
+                </li>
             </ul>
         </nav>
     </main>

@@ -188,7 +188,7 @@ form.addEventListener("submit", (event)=>{
     
     if (!esValido) {
         // NOTA: Si quieren ver las validaciones de Flask comenten la linea de abajo.
-        // event.preventDefault(); // solo bloqueamos el envío si hay errores
+        event.preventDefault(); // solo bloqueamos el envío si hay errores
     }
 
 });

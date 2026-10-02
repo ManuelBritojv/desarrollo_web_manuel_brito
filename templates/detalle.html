@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Avistamiento: Unión de Ornitólogos de Chile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle.css') }}">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/registro">Registro de Voluntarios</a></li>
+                <li><a href="/avistamiento">Informar Avistamiento</a></li>
+                <li><a href="/listado">Listado de Avistamientos</a></li>
+                <li><a href="/metricas">Indicadores y Métricas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="title">
+            <h1>{{ avistamiento.ave.nombre }}</h1>
+            <p>Detalle del avistamiento</p>
+        </section>
+
+        <dl class="datos"> <!-- dl es de Description List. -->
+            <div>
+                <dt>Fecha y hora</dt>
+                <dd>{{ avistamiento.fecha_hora.strftime('%d-%m-%Y %H:%M') }}</dd>
+            </div>
+            <div>
+                <dt>Ubicación</dt>
+                <dd>{{ avistamiento.lugar }}</dd>
+            </div>
+            <div>
+                <dt>Observador</dt>
+                <dd>{{ avistamiento.voluntario.nombre }}</dd>
+            </div>
+            <div>
+                <dt>Descripción</dt>
+                <dd>{{ avistamiento.descripcion or 'Sin descripción.' }}</dd>
+            </div>
+        </dl>
+
+        <section class="evidencias">
+            <h2>Evidencia</h2>
+            <div class="galeria">
+                {% for r in avistamiento.registros %}
+                    <figure>
+                        {% if r.ruta_archivo.rsplit('.', 1)[-1]|lower in ['mp4', 'webm'] %} <!-- Si la extension es de tipo video -->
+                            <video controls src="{{ url_for('static', filename=r.ruta_archivo) }}">
+                                Tu navegador no puede reproducir este video.
+                            </video>
+                        {% else %}
+                            <a href="{{ url_for('static', filename=r.ruta_archivo) }}"> <!-- Entonces es una foto-->
+                                <img src="{{ url_for('static', filename=r.ruta_archivo) }}" alt="Evidencia: {{ r.nombre_archivo }}">
+                            </a>
+                        {% endif %}
+                        <figcaption>{{ r.nombre_archivo }}</figcaption>
+                    </figure>
+                {% else %}
+                    <p>Este avistamiento no tiene archivos.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <a class="boton-volver" href="{{ url_for('listado') }}">Volver al listado</a>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

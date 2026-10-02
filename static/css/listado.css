@@ -17,59 +17,6 @@
     color: var(--color-primario);
 }
 
-/* Filtros */
-
-.filtros-seccion {
-    max-width: 1000px;
-    margin: 0 auto 30px auto; /* Centra el filtro*/
-}
-
-.filtros-form fieldset {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 15px;
-    padding: 20px 25px;
-    background-color: #f8f9fa;
-    border: 2px solid var(--color-secundario, #40916c);
-    border-radius: 10px;
-}
-
-.filtros-form legend {
-    font-weight: bold;
-    color: var(--color-primario, #1b4332);
-    padding: 0 10px;
-}
-
-.filtros-form label {
-    font-weight: bold;
-    color: #333;
-}
-
-.filtros-form select {
-    width: 20%; /* Uso 20% en especifico para que no se vea tan raro con el flex-wrap*/
-    padding: 6px 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    flex-grow: 1; 
-    min-width: 150px;
-}
-
-#button-aplicar {
-    width: 100%;
-    padding: 15px;
-    background-color: var(--color-primario);
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-#button-aplicar:hover {
-    background-color: var(--color-primario-dark);
-}
-
 /* Seccion de la tabla con los datos*/
 main{
     gap: 10px; /* Para esta página reduzco el gap entre las etiquetas de main*/
@@ -116,6 +63,9 @@ main{
     color: var(--color-primario-dark);
     font-weight: bold;
     text-decoration: underline;
+}
+tr td{ /* Para señalara que ahora las filas son clickeables */
+    cursor: pointer
 }
 /* Ya tenia un estilo para <nav> de styles.css */
 /* Para la paginacion sobreescribo algunas cosas */

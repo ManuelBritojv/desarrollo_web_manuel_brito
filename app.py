@@ -1,7 +1,8 @@
 import os
 from datetime import datetime, timedelta
+from math import ceil
 
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, url_for
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import Session
 from werkzeug.utils import secure_filename
@@ -95,9 +96,17 @@ def registro():
             if voluntario_id is None:
                 flash('No se pudo guardar el registro. Intente nuevamente.', 'flash_error')
                 return render_template("registro.html", regiones=regiones, comunas=comunas)
-            return render_template("registro.html", regiones=regiones, comunas=comunas, exito=True, voluntario_id=voluntario_id)
+            return redirect(url_for('registro', exito=voluntario_id))
 
         # Si el metodo de request es GET
+        exito_id = request.args.get('exito', '')
+        if exito_id.isdecimal():
+            voluntario = session.scalars(
+                select(Voluntario)                      # SELECT * FROM voluntario
+                .where(Voluntario.id == int(exito_id))  # WHERE id = exito_id
+            ).first() 
+            if voluntario is not None:
+                return render_template("registro.html", regiones=regiones, comunas=comunas, exito=True, voluntario_id=voluntario.id)
         return render_template("registro.html", regiones=regiones, comunas=comunas)
 
 
@@ -266,9 +275,43 @@ def avistamiento():
         return render_template("avistamiento.html", regiones=regiones, comunas=comunas, aves=aves)
     
 
+
+POR_PAGINA = 5 # Cantidad de avistamientos que muestro por página.
 @app.route('/listado')
 def listado():
-    return render_template("listado.html")
+    pagina = request.args.get('pagina', '1')
+    if pagina.isdecimal() and int(pagina) >= 1:
+        pagina = int(pagina) 
+    else: 
+        pagina = 1
+
+    with Session(engine) as session:
+        total = session.scalar( #Total de avistamientos
+            select(func.count(Avistamiento.id))
+        )
+        total_paginas = max(1, ceil(total / POR_PAGINA)) # Maximo de avistamientos por pagina
+        pagina = min(pagina, total_paginas)  # si piden una página que no existe
+        stmt = (
+            select(Avistamiento)                                                # SELECT * FROM avistamiento
+            .order_by(Avistamiento.fecha_hora.desc(), Avistamiento.id.desc())   # ORDER BY fecha_hora DESC, id DESC
+            .offset((pagina - 1) * POR_PAGINA)                                  # LIMIT POR_PAGINA
+            .limit(POR_PAGINA)                                                  # OFFSET (pagina - 1) * POR_PAGINA;
+        )
+        avistamientos = session.scalars(stmt).all()
+        return render_template("listado.html", avistamientos=avistamientos, pagina=pagina, total_paginas=total_paginas)    
+
+
+@app.route('/listado/<int:avistamiento_id>')
+def detalle(avistamiento_id): # Detalles del avistamiento
+    with Session(engine) as session:
+
+        avistamiento = session.scalars(
+            select(Avistamiento)                        # SELECT * FROM avistamiento
+            .where(Avistamiento.id == avistamiento_id)  # WHERE avistamiento.id = avistamiento_id
+        ).first()
+        if avistamiento is None:
+            abort(404) # No existe el avistamiento, asi que page not found.
+        return render_template("detalle.html", avistamiento=avistamiento)
 
 @app.route('/metricas')
 def metricas():
