@@ -1,38 +1,64 @@
 /*Misma logica que en registro.js*/
-import { comunasPorRegion } from "./comunas.js";
 
 const region = document.getElementById("region");
 const comuna = document.getElementById("comuna");
 
-region.addEventListener("change", function(){ // Logica del sistema Región-Comuna
-    const regionSeleccionada = this.value;
-    comuna.innerHTML = '<option value="">Seleccione una comuna...</option>';
-    if(regionSeleccionada !== ""){  // Si seleccionamos una región
-        comuna.disabled = false; // Ahora podemos interactuar con el select de comunas
-        const comunas = comunasPorRegion[regionSeleccionada];
-        for(let i = 0; i < comunas.length; i++){
-            const opcion = document.createElement("option");
-            opcion.value = comunas[i].toLowerCase().replaceAll(" ", "-");
-            opcion.textContent = comunas[i];
-            comuna.appendChild(opcion);
+region.addEventListener("change", function(){ // Logica del sistema Región-Comuna (Ahora con BD)
+    const regionIdSeleccionada = this.value;
+    comuna.value = ""
+    const opcionesComuna = comuna.querySelectorAll('option:not([value=""])') // Todos los hijos tal que la opcion no sea ""
+    const opcionDefault = comuna.querySelector('option[value=""]') // la opcion <option value="">Primero seleccione una región...</option>
+    if (regionIdSeleccionada !== ""){ // Si hay alguna region seleccionada
+        comuna.disabled = false;
+        opcionDefault.textContent = 'Seleccione una comuna...' // Cambiamos el texto
+        for(let i = 0; i < opcionesComuna.length; i++){
+            let opcion = opcionesComuna[i]
+            // dataset permite acceder a etiquetas pers. estilo data-xxx
+            // Si encontramos la region que necesitamos.
+            if(opcion.dataset.region == regionIdSeleccionada){
+                opcion.style.display = 'block' // Las mostramos
+            }else{
+                opcion.style.display = 'none' // No las mostramos
+            }
         }
-    }else{
+    } else{ // Si no tenemos una region seleccionada.
         comuna.disabled = true;
-        comuna.innerHTML = '<option value="">Primero seleccione una región...</option>';
+        opcionDefault.textContent = 'Primero seleccione una región...' // Cambiamos el texto
+        for(let i = 0; i < opcionesComuna.length; i++){
+            opcionesComuna[i].style.display = 'none' // No las mostramos
+        }
     }
 });
+
+/**
+ * Verifica que si un ave ingresada por el usuario en tipo de ave exista en la BD.
+ * @param {*} nombreAve Nombre de la ave a ver si es válida
+ * @returns Boolean
+ */
+function esAveValida(nombreAve) {
+    const datalist = document.getElementById("lista-aves");
+    const opciones = datalist.querySelectorAll("option");
+    const nombreLimpio = nombreAve.trim().toLowerCase();
+
+    // Recorremos las opciones del datalist para verificar si coincide exactamente
+    for (let i = 0; i < opciones.length; i++) {
+        if (opciones[i].value.trim().toLowerCase() === nombreLimpio) {
+            return true; // Encontramos el ave en la BD
+        }
+    }
+    return false; // No existe o escribió un ave inválida
+}
+
 
 
 const form = document.getElementById("form-avistamiento");
 
+// Actualización de lógica.
 form.addEventListener("submit", (event)=>{
-    event.preventDefault();
     let esValido = true;
 
-    const exito = document.getElementById("exito");
-
-    const correo = document.getElementById("email-observador").value;
-    const errorCorreo = document.getElementById("error-email");
+    const idVoluntario = document.getElementById("id-voluntario").value;
+    const errorIdVoluntario = document.getElementById("error-id-voluntario");
 
     const fechaHora = document.getElementById("fecha").value;
     const errorFecha = document.getElementById("error-fecha");
@@ -40,29 +66,27 @@ form.addEventListener("submit", (event)=>{
     const tipoAve = document.getElementById("tipo-ave").value;
     const errorTipo = document.getElementById("error-tipo");
 
-    const nombreEspecie = document.getElementById("nombre-ave").value;
-    const errorNombreEspecie = document.getElementById("error-nombre-ave");
-
-    const region = document.getElementById("region").value;
+    const regionValor = document.getElementById("region").value;
     const errorRegion = document.getElementById("error-region");
 
-    const comuna = document.getElementById("comuna").value;
+    const comunaValor = document.getElementById("comuna").value;
     const errorComuna = document.getElementById("error-comuna");
 
     const registro = document.getElementById("evidencia");
     const errorRegistro = document.getElementById("error-evidencia");
 
-    // Si ya teniamos un mensaje de exito lo quitamos.
-    if (exito.classList.contains("visible")){
-        exito.classList.remove("visible");
-    }
+    const desc = document.getElementById("descripcion").value;
+    const errorDesc = document.getElementById("error-descripcion");
+
+    const lugar = document.getElementById("lugar").value;
+    const errorLugar = document.getElementById("error-lugar");
     
-    // Validaciones del email.
-    if(correo.trim() === "" || !correo.trim().includes("@")){
-        errorCorreo.classList.add("visible");
+    // Validacion del id del voluntario
+    if((idVoluntario.trim() === "" || isNaN(idVoluntario))){
+        errorIdVoluntario.classList.add("visible");
         esValido = false;
     }else{
-        errorCorreo.classList.remove("visible");
+        errorIdVoluntario.classList.remove("visible");
     }
 
     // Validaciones de la fecha y hora
@@ -98,63 +122,79 @@ form.addEventListener("submit", (event)=>{
     }
 
     // Validacion de tipo de ave
-    if(tipoAve === ""){
+    if(tipoAve === "" || !esAveValida(tipoAve)){
         errorTipo.classList.add("visible");
         esValido = false
     }else{
         errorTipo.classList.remove("visible");
     }
 
-    // Validacion del nombre de la especie
-    if (nombreEspecie.trim() === ""){
-        errorNombreEspecie.classList.add("visible");
+    // Validacion de la desc
+    if(desc.length > 500){
+        errorDesc.classList.add("visible");
         esValido = false;
     }else{
-        errorNombreEspecie.classList.remove("visible");
+        errorDesc.classList.remove("visible");
     }
 
     // Validacion de las regiones y comunas.
-    if(region === ""){
+    if(regionValor === ""){
         errorRegion.classList.add("visible");
         esValido = false;
     }else{
         errorRegion.classList.remove("visible");
     }
-    if(comuna === ""){
+    if(comunaValor === ""){
         errorComuna.classList.add("visible");
         esValido = false;
     }else{
         errorComuna.classList.remove("visible");
     }
-    
-    // Validacion de registro fotografico o video
-    if(registro.files.length === 0){
-        // El usuario no subio ningun archivo
-        errorRegistro.textContent = "¡Es obligatorio subir una foto o vídeo del avistamiento!";
-        errorRegistro.classList.add("visible");
+
+    // Validacion del lugar
+    if(lugar.length > 120){
+        errorLugar.classList.add("visible");
         esValido = false;
     }else{
-        // Si subio un archivo, veo que es.
-        const archivo = registro.files[0]
-        const tipoArchivo = archivo.type;
-        
-        if(!tipoArchivo.startsWith("image/") && !tipoArchivo.startsWith("video/")){
-            errorRegistro.textContent = "El archivo debe ser estrictamente una fotografía o un vídeo.";
+        errorLugar.classList.remove("visible");
+    }
+
+    // Validacion de registro fotografico o video (Múltiples archivos)
+    if(registro.files.length === 0){
+        // El usuario no subió ningún archivo
+        errorRegistro.textContent = "Es obligatorio subir al menos una foto o vídeo del avistamiento";
+        errorRegistro.classList.add("visible");
+        esValido = false;
+    } else {
+        let archivosValidos = true;
+        // Recorremos todos los archivos seleccionados
+        for(let i = 0; i < registro.files.length; i++){
+            const archivo = registro.files[i];
+            const tipoArchivo = archivo.type;
+            // Verificamos si alguno NO es imagen ni video
+            if(!tipoArchivo.startsWith("image/") && !tipoArchivo.startsWith("video/")){
+                archivosValidos = false;
+                break; 
+            }
+        }
+        if(!archivosValidos){
+            errorRegistro.textContent = "Todos los archivos seleccionados deben ser estrictamente fotografías o vídeos.";
             errorRegistro.classList.add("visible");
             esValido = false;
-        }else{
+        } else {
             errorRegistro.classList.remove("visible");
         }
     }
     
-    // Si paso todas las validaciones muestro un mensaje.
-    if (esValido){
-        exito.classList.add("visible");
-        form.reset();
-        // Vuelvo a desactivar el campo de comunas.
-        const selectComuna = document.getElementById("comuna");
-        selectComuna.disabled = true;
-        selectComuna.innerHTML = '<option value="">Primero seleccione una región...</option>';
+    if (!esValido) {
+        // NOTA: Si quieren ver las validaciones de Flask comenten la linea de abajo.
+        // event.preventDefault(); // solo bloqueamos el envío si hay errores
     }
 
 });
+
+// Lanzamos un evento, como si hubieramos hecho un change en la region (Para poder mantener la comuna)
+if (region.value !== "") {
+    region.dispatchEvent(new Event("change"));  // habilita la comuna y filtra las opciones
+    comuna.value = comuna.dataset.seleccionada;
+}

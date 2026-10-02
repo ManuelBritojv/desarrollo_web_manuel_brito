@@ -32,6 +32,11 @@ region.addEventListener("change", function(){ // Logica del sistema Región-Comu
 // Validaciones del formulario
 // Funciones auxiliares.
 
+/**
+ * Funcion que revisa si un input de nombre, es un nombre válido.
+ * @param {*} nombre Nombre a verificar
+ * @returns Boolean
+ */
 function esNombreValido(nombre){
     const permitidos = new Set("abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚüÜ "); 
     // Uso un set para tener un algoritmo O(1) en cada iteracion del ciclo for, hashMap.
@@ -43,6 +48,11 @@ function esNombreValido(nombre){
     return true; // Con eso esta funcion trabaja en O(n).
 }
 
+/**
+ * Funcion que revisa si un input de télefono, es un télefono chileno válido.
+ * @param {*} numero Número de télefono a revisar.
+ * @returns Boolean
+ */
 function esNumeroValido(numero){
     numero = numero.replaceAll(" ", "");
     const permitidos = new Set("0123456789");

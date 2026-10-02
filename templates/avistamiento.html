@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio Unión de Ornitólogos de Chile</title>
+    <title>Avistamiento: Unión de Ornitólogos de Chile</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/formularios.css') }}">
 </head>
@@ -28,33 +28,42 @@
         </section>
         <div class="form-container"> <!-- Cambie de section a div, debido a que el validador no aceptaba section's sin h2-h6. Como esta caja es para css no hay problema -->
             <p class="form-note">Los campos marcados con <span class="req">(*)</span> son obligatorios.</p>
-            <p id="exito" class="exito">¡Avistamiento registrado con éxito! Gracias por tu aporte.</p>
-            <form action="#" id="form-avistamiento" method="POST">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <form action="#" id="form-avistamiento" method="POST" enctype="multipart/form-data">
                 <fieldset>
                         <legend>Datos del Observador y Ave</legend>
                         
-                        <label for="email-observador">Tu Correo Electrónico <span class="req">(*)</span>:</label>
-                        <input type="email" id="email-observador" name="email-observador">
-                        <span class="error" id="error-email">Ingrese un correo válido.</span>
+                        <label for="id-voluntario">Id voluntario <span class="req">(*)</span>:</label>
+                        <!-- Si vengo de registro lo pongo aca, si falle un avistamiento tambien lo coloco-->
+                        <input type="number" id="id-voluntario" name="id-voluntario" value="{{ request.form.get('id-voluntario') or request.args.get('voluntario', '') }}">
+                        <span class="error" id="error-id-voluntario">Ingrese una id válida.</span>
 
                         <label for="fecha">Fecha y Hora del avistamiento <span class="req">(*)</span>:</label>
-                        <input type="datetime-local" id="fecha" name="fecha">
+                        <input type="datetime-local" id="fecha" name="fecha" value="{{ request.form.get('fecha', '') }}">
                         <span class="error" id="error-fecha">.</span>
 
                         <label for="tipo-ave">Tipo de ave <span class="req">(*)</span>:</label>
-                        <select id="tipo-ave" name="tipo-ave">
-                            <option value="">Seleccione un tipo...</option>
-                            <option value="rapaz">Ave Rapaz (Águilas, Cóndores, Halcones...)</option>
-                            <option value="acuatica">Ave Acuática (Patos, Cisnes, Garzas...)</option>
-                            <option value="marina">Ave Marina (Gaviotas, Pelícanos, Pingüinos...)</option>
-                            <option value="paseriforme">Ave Cantora/Pequeña (Zorzales, Loicas, Chincoles...)</option>
-                            <option value="otra">Otro tipo / No estoy seguro</option>
-                        </select>
+                        <input type="text" id="tipo-ave" name="tipo-ave" list="lista-aves" placeholder="Escribe para buscar un ave..." autocomplete="off" value="{{ request.form.get('tipo-ave', '') }}">
+                        <!--Requiere HTML5-->
+                        <datalist id="lista-aves">
+                            {% for ave in aves %}
+                                <option value="{{ ave.nombre }}"></option>
+                            {% endfor %}
+                        </datalist>
                         <span class="error" id="error-tipo">Debe seleccionar el tipo de ave.</span>
 
-                        <label for="nombre-ave">Nombre de la Especie <span class="req">(*)</span>:</label>
-                        <input type="text" id="nombre-ave" name="nombre-ave" placeholder="Ej. Cóndor Andino">
-                        <span class="error" id="error-nombre-ave">Debe ingresar el nombre de la especie.</span>
+                        <label for="descripcion">Descripción Extra (Opcional)</label>
+                        <input type="text" id="descripcion" name="descripcion" value="{{ request.form.get('descripcion', '') }}">
+                        <span class="error" id="error-descripcion">El largo de la descripcion no puede ser más de 500 caracteres.</span>
+
                 </fieldset>
                 <fieldset>
                         <legend>Ubicación y Evidencia</legend>
@@ -62,36 +71,29 @@
                         <label for="region">Región <span class="req">(*)</span>:</label>
                         <select id="region" name="region">
                             <option value="">Seleccione una región...</option>
-                            <option value="arica-parinacota">Región de Arica y Parinacota</option>
-                            <option value="tarapaca">Región de Tarapacá</option>
-                            <option value="antofagasta">Región de Antofagasta</option>
-                            <option value="atacama">Región de Atacama</option>
-                            <option value="coquimbo">Región de Coquimbo</option>
-                            <option value="valparaiso">Región de Valparaíso</option>
-                            <option value="metropolitana">Región Metropolitana de Santiago</option>
-                            <option value="ohiggins">Región del Libertador Gral. Bernardo O'Higgins</option>
-                            <option value="maule">Región del Maule</option>
-                            <option value="nuble">Región de Ñuble</option>
-                            <option value="biobio">Región del Biobío</option>
-                            <option value="araucania">Región de La Araucanía</option>
-                            <option value="los-rios">Región de Los Ríos</option>
-                            <option value="los-lagos">Región de Los Lagos</option>
-                            <option value="aysen">Región Aysén del Gral. Carlos Ibáñez del Campo</option>
-                            <option value="magallanes">Región de Magallanes y de la Antártica Chilena</option>
+                            {% for region in regiones %}
+                            <!--Si el form se envio y habia un error, con esta linea aseguramos que se mantenga seleccionado.-->
+                                <option value="{{ region.id }}" {% if request.form.get('region') == region.id|string %}selected{% endif %}>{{ region.nombre }}</option>
+                            {% endfor %}
                         </select>
-                        <span class="error" id="error-region">Debe seleccionar una región.</span>
+                        <span class="error" id="error-region">Debe seleccionar una región</span>
 
                         <label for="comuna">Comuna <span class="req">(*)</span>:</label>
-                        <select id="comuna" name="comuna" disabled>
+                        <select id="comuna" name="comuna" disabled data-seleccionada="{{ request.form.get('comuna', '') }}">
                             <option value="">Primero seleccione una región...</option>
+                            {% for comuna in comunas %}
+                                <option value="{{comuna.id}}" data-region="{{comuna.region_id}}" style="display: none;">{{comuna.nombre}}</option>
+                            {% endfor%}
                         </select>
-                        <span class="error" id="error-comuna">Debe seleccionar una comuna.</span>
+                        <span class="error" id="error-comuna">Debe seleccionar una comuna</span>
 
                         <label for="lugar">Lugar específico (Opcional):</label>
-                        <input type="text" id="lugar" name="lugar" placeholder="Ej. Humedal Batuco, Parque Araucano...">
+                        <input type="text" id="lugar" name="lugar" placeholder="Ej. Humedal Batuco, Parque Araucano..." value="{{ request.form.get('lugar', '') }}">
+                        <!-- Elegi 120 de largo maximo, debido que region y comuna igual usan caracteres. (Y no puedo pasar de 200)-->
+                        <span class="error" id="error-lugar">La especificación del lugar no puede tener mas de 120 caracteres.</span>
 
                         <label for="evidencia">Registro Fotográfico o Vídeo <span class="req">(*)</span>:</label>
-                        <input type="file" id="evidencia" name="evidencia">
+                        <input type="file" id="evidencia" name="evidencia" multiple>
                         <span class="error" id="error-evidencia"></span>
                 </fieldset>
                 <button type="submit" id="button-submit">Registrar Avistamiento</button>

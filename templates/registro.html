@@ -39,6 +39,7 @@
             {% endwith %}
             {% if exito %}
                 <p class="flash_exito">¡Registro exitoso! Ya eres parte de nuestra red de observadores.</p>
+                <p class="flash_exito"> Tu id como voluntario es {{ voluntario_id }}</p>
                 <div class="acciones">
                     <a class="boton_exito_avistamiento" href="{{ url_for('avistamiento', voluntario=voluntario_id) }}">Registrar un avistamiento</a>
                     <a class="boton_exito_inicio" href="{{ url_for('index') }}">Volver al inicio</a>

@@ -1,4 +1,5 @@
-from datetime import datetime
+import os
+from datetime import datetime, timedelta
 
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
@@ -90,4 +91,30 @@ def agregar_voluntario(session, nombre, email, telefono, comuna_id):
         return voluntario.id
     except Exception as e:
         session.rollback()
+        return None
+
+def agregar_avistamiento(session, voluntario_id, ave_id, fecha_hora, lugar, descripcion, registros):
+    guardados = []
+    try:
+        avistamiento = Avistamiento(
+            voluntario_id=voluntario_id, ave_id=ave_id,
+            fecha_hora=fecha_hora, lugar=lugar, descripcion=descripcion or None,
+        )
+        session.add(avistamiento)
+        session.flush()  # asigna avistamiento.id sin cerrar la transacción
+        for r in registros:
+            r['registro_obj'].save(r['ruta_fisica'])
+            guardados.append(r['ruta_fisica'])
+            session.add(Registro(
+                ruta_archivo=r['ruta_relativa'],
+                nombre_archivo=r['nombre_original'],
+                avistamiento_id=avistamiento.id,
+            ))
+        session.commit()
+        return avistamiento.id
+    except Exception:
+        session.rollback()
+        for ruta in guardados:
+            if os.path.exists(ruta):
+                os.remove(ruta)
         return None

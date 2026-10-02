@@ -22,6 +22,15 @@
     </header>
 
     <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <section class="title">
             <h1>Unión de Ornitólogos de Chile</h1>
             <p>Sistema de Gestión de Avistamientos de Aves</p>
@@ -48,7 +57,7 @@
                         <li>
                             <strong>{{ avistamiento.fecha_hora.strftime('%d-%m-%Y %H:%M') }}</strong>: 
                             Se observó un(a) <strong>{{ avistamiento.ave.nombre }}</strong> 
-                            en {{ avistamiento.lugar }} ({{ avistamiento.voluntario.comuna.nombre }}).
+                            en {{ avistamiento.lugar }}.
                         </li>
                     {% endfor %}
                 </ul>
