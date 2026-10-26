@@ -42,47 +42,14 @@
         </div>
 
         <div class="graficos-seccion"> <!-- Cambie de section a div, debido a que el validador no aceptaba section's sin h2-h6. Como esta caja es para css no hay problema -->
-            <figure class="grafico-contenedor">
-                <figcaption>Avistamientos por Tipo de Ave</figcaption>
-                <ul class="grafico-barras">
-                    <li class="rapaces">
-                        <span class="etiqueta">Rapaces</span>
-                        <div class="barra-pista"><div class="barra-relleno"></div></div> <!-- div necesario para la barra-->
-                        <span class="valor">85%</span>
-                    </li>
-                    <li class="acuaticas">
-                        <span class="etiqueta">Acuáticas</span>
-                        <div class="barra-pista"><div class="barra-relleno"></div></div> <!-- div necesario para la barra-->
-                        <span class="valor">60%</span>
-                    </li>
-                    <li class="marinas">
-                        <span class="etiqueta">Marinas</span>
-                        <div class="barra-pista"><div class="barra-relleno"></div></div> <!-- div necesario para la barra-->
-                        <span class="valor">45%</span>
-                    </li>
-                    <li class="cantoras">
-                        <span class="etiqueta">Cantoras</span>
-                        <div class="barra-pista"><div class="barra-relleno"></div></div> <!-- div necesario para la barra-->
-                        <span class="valor">90%</span>
-                    </li>
-                </ul>
-            </figure>
-
-            <figure class="grafico-contenedor">
-                <figcaption>Voluntarios por Zona Geográfica</figcaption>
-                <div class="grafico-circular"></div>
-                
-                <ul class="leyenda-circular">
-                    <li><span class="color-box zona-norte"></span> Zona Norte (25%)</li>
-                    <li><span class="color-box zona-centro"></span> Zona Centro (55%)</li>
-                    <li><span class="color-box zona-sur"></span> Zona Sur (20%)</li>
-                </ul>
-            </figure>
+            <figure id="grafico-barras"></figure>
         </div>
     </main>
 
     <footer>
         <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
     </footer>
+    <script src="https://code.highcharts.com/highcharts.js"> </script>
+    <script src="{{ url_for('static', filename='js/metricas.js') }}"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta
 from math import ceil
 
-from flask import Flask, abort, flash, redirect, render_template, request, url_for
+from flask import Flask, abort, flash, redirect, render_template, request, url_for, jsonify
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.orm import Session
 from werkzeug.utils import secure_filename
@@ -316,6 +316,22 @@ def detalle(avistamiento_id): # Detalles del avistamiento
 @app.route('/metricas')
 def metricas():
     return render_template("metricas.html")
+
+@app.route('/api/voluntarios-comuna')
+def voluntariosxComuna():
+    with Session(engine) as sesion:
+        volxComuna = sesion.execute(
+            select(Comuna.nombre, func.count(Voluntario.id))
+            .select_from(Voluntario)
+            .join(Comuna, Comuna.id == Voluntario.comuna_id)
+            .group_by(Voluntario.comuna_id)
+            .order_by(Comuna.nombre)
+        ).all()
+        datos = {}
+        for comuna, cant in volxComuna:
+            datos[comuna] = cant
+        return jsonify(datos)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
