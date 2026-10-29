@@ -46,37 +46,33 @@
 }
 
 /* Graficos */
-
-/* Contenedores de los graficos */
 .graficos-seccion{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 40px;
+    align-items: stretch;
+    gap: 24px;
     width: 100%;
+    box-sizing: border-box;
 }
-.grafico-contenedor{
+.graficos-seccion figure {
     flex: 1;
-    background-color: #fff;
-    border: 2px solid var(--color-secundario);
+    min-width: 0;
+    height: 350px;
+    margin: 0;
+    border: 2px var(--color-secundario) solid;
     border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
 }
-.grafico-contenedor figcaption {
-    text-align: center;
-    font-weight: bold;
-    font-size: 18px;
-    color: var(--color-primario-dark);
-    margin-bottom: 25px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--color-secundario);
+
+#grafico-torta {
+    flex-basis: 100%;
 }
-#grafico-barras{
-    height: 400px;
-    min-width: 300px;
-    max-width: 800px;
+
+#grafico-barras,
+#grafico-lineas,
+#grafico-torta{
+    width: 100%;
+    height: 350px;
 }
 
 @media (max-width: 768px) {
@@ -85,11 +81,19 @@
         padding: 10px;
         margin: 5px auto;
     }
-    .graficos-seccion{
+    .graficos-seccion {
         flex-direction: column;
+        gap: 20px;
     }
-    .grafico-barras{
-        gap: 15px;
+
+    .graficos-seccion figure {
+        flex: none;
+        width: 100%;
+        height: 300px;
+    }
+    #grafico-barras,
+    #grafico-lineas {
+        height: 300px;
     }
 }
 

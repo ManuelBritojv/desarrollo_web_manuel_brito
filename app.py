@@ -317,19 +317,74 @@ def detalle(avistamiento_id): # Detalles del avistamiento
 def metricas():
     return render_template("metricas.html")
 
+
+@app.route('/api/pagina-metricas')
+def paginaMetricas():
+    with Session(engine) as session:
+        volRegistrados = session.scalars(                       
+            select(func.count(Voluntario.id))               # SELECT COUNT(id) FROM voluntario;
+        ).first()
+        avistamientosTotales = session.scalars(
+            select(func.count(Avistamiento.id))             # SELECT COUNT(id) FROM avistamiento;
+        ).first()
+        region_expr = func.trim(func.substring_index(Avistamiento.lugar, ',', 1)) # TRIM(SUBSTRING_INDEX(a.lugar, ',', 1))
+        regionesActivas = session.scalars(
+            select(func.count(Region.id.distinct()))                       # SELECT COUNT(r.id) FROM region as r   
+            .select_from(Region)                                # JOIN avistamiento as a ON region.nombre = TRIM(SUBSTRING_INDEX(a.lugar, ',', 1));
+            .join(Avistamiento, Region.nombre == region_expr)
+        ).first()
+        datos = {}
+        datos["volRegistrados"] = volRegistrados
+        datos["avistamientosTotales"] = avistamientosTotales
+        datos["regionesActivas"] = regionesActivas
+        return jsonify(datos)
+
 @app.route('/api/voluntarios-comuna')
 def voluntariosxComuna():
-    with Session(engine) as sesion:
-        volxComuna = sesion.execute(
-            select(Comuna.nombre, func.count(Voluntario.id))
-            .select_from(Voluntario)
-            .join(Comuna, Comuna.id == Voluntario.comuna_id)
-            .group_by(Voluntario.comuna_id)
+    with Session(engine) as session:
+        volxComuna = session.execute(
+            select(Comuna.nombre, func.count(Voluntario.id))    # SELECT c.nombre, COUNT(v.id) FROM voluntario as v
+            .select_from(Voluntario)                            # JOIN comuna as c ON c.id = v.comuna_id
+            .join(Comuna, Comuna.id == Voluntario.comuna_id)    # GROUP BY (c.id, c.nombre);
+            .group_by(Comuna.id, Comuna.nombre)
             .order_by(Comuna.nombre)
         ).all()
         datos = {}
         for comuna, cant in volxComuna:
             datos[comuna] = cant
+        return jsonify(datos)
+
+
+@app.route('/api/avistamiento-dia')
+def avistamientoxDia():
+    with Session(engine) as session:
+        avistamientoxDia = session.execute(
+            select(func.date(Avistamiento.fecha_hora), func.count(Avistamiento.id))     # SELECT DATE(fecha_hora), COUNT(id) FROM avistamiento
+            .group_by(func.date(Avistamiento.fecha_hora))                               # GROUP BY DATE(fecha_hora)
+            .order_by(func.date(Avistamiento.fecha_hora))                               # ORDER BY DATE(fecha_hora);
+        ).all()
+        datos = {}
+        for fecha, cant in avistamientoxDia:
+            datos[str(fecha)] = cant
+        return jsonify(datos)
+        
+@app.route('/api/total-por-ave')
+def totalPorAve():
+    with Session(engine) as session:
+        totalPorAve = session.execute(
+            select(Ave.nombre, func.count(Avistamiento.id))            # SELECT ave.nombre, COUNT(a.id) 
+            .select_from(Avistamiento)                                 # FROM avistamiento AS a
+            .join(Ave, Avistamiento.ave_id == Ave.id)                  # JOIN ave ON a.ave_id = ave.id
+            .group_by(Ave.id)                                          # GROUP BY ave.id 
+            .order_by(Ave.nombre)                                      # ORDER BY ave.nombre
+        ).all()
+        datos = []
+        actual = {}
+        for ave, cant in totalPorAve:
+            actual["name"] = ave
+            actual["y"] = cant
+            datos.append(actual)
+            actual = {}
         return jsonify(datos)
 
 
