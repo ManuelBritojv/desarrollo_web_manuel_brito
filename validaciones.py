@@ -1,11 +1,11 @@
 
-# Validación que un nombre sea valido (misma que en registro.js)
+import re
+
+
+# (Mejorada)
 def esNombreValido(nombre):
-    permitidos = set("abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚüÜ ")
-    for char in nombre:
-        if char not in permitidos:
-            return False
-    return True
+    regex = r"^[a-zA-ZñÑ ]+$"
+    return re.fullmatch(regex, nombre) is not None
 
 # Validación que un numero sea valido (misma que en registro.js)
 def esNumerovalido(numero):
@@ -27,3 +27,11 @@ def esNumerovalido(numero):
             return False
 
     return True
+# Devuelve la lista de errores (vacía si todo está bien).
+def validar_comentario(nombre, texto):
+    errores = []
+    if len(nombre) < 3 or len(nombre) > 50:
+        errores.append('El nombre debe tener entre 3 y 50 caracteres.')
+    if len(texto) < 5 or len(texto) > 300:
+        errores.append('El comentario debe tener entre 5 y 300 caracteres.')
+    return errores

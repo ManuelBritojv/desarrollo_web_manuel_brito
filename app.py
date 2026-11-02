@@ -304,7 +304,6 @@ def listado():
 @app.route('/listado/<int:avistamiento_id>')
 def detalle(avistamiento_id): # Detalles del avistamiento
     with Session(engine) as session:
-
         avistamiento = session.scalars(
             select(Avistamiento)                        # SELECT * FROM avistamiento
             .where(Avistamiento.id == avistamiento_id)  # WHERE avistamiento.id = avistamiento_id
@@ -387,6 +386,39 @@ def totalPorAve():
             actual = {}
         return jsonify(datos)
 
+
+@app.route('/api/comentarios/<int:avistamiento_id>', methods=['GET'])
+def listar_comentarios(avistamiento_id):
+    with Session(engine) as session:
+        if session.get(Avistamiento, avistamiento_id) is None:
+            return jsonify({"errores": ["El avistamiento no existe."]}), 404 # Page not found (404)
+        comentarios = obtener_comentarios(session, avistamiento_id)
+        resultado = []
+        for comentario in comentarios:
+            com_individual = {
+                "nombre": comentario.nombre,
+                "texto": comentario.texto,
+                "fecha": comentario.fecha.strftime('%d-%m-%Y %H:%M')
+            }
+            resultado.append(com_individual)
+        return jsonify(resultado)
+
+@app.route('/api/comentarios/<int:avistamiento_id>', methods=['POST'])
+def crear_comentario(avistamiento_id):
+    nombre = request.form.get('nombre', '').strip()
+    texto = request.form.get('texto', '').strip()
+
+    errores = validar_comentario(nombre, texto)
+    if errores:
+        return jsonify({"errores": errores}), 400 # Error de cliente. (4xx)
+
+    with Session(engine) as session:
+        if session.get(Avistamiento, avistamiento_id) is None:
+            return jsonify({"errores": ["El avistamiento no existe."]}), 404 # Page not found (404)
+        comentario_id = agregar_comentario(session, nombre, texto, avistamiento_id)
+        if comentario_id is None:
+            return jsonify({"errores": ["No se pudo guardar el comentario. Intente nuevamente."]}), 500 # Fallo la insercion error del servidor (500)
+        return jsonify({"id": comentario_id}), 201 # Creado (201)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -67,10 +67,137 @@
     padding: 12px 25px;
     background-color: var(--color-primario);
     color: white;
-    font-weight: bold;
     text-decoration: none;
     border-radius: 10px;
+    font-size: 15px;
+    border: none;
 }
 .boton-volver:hover {
     background-color: var(--color-primario-dark);
+}
+
+.comentarios{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    gap: 25px;
+}
+.comentarios h2{
+    color: var(--color-primario-dark);
+}
+.comentarios p{
+    color: var(--color-primario);
+}
+
+#agregar-comentario{
+    padding: 12px 25px;
+    background-color: var(--color-primario);
+    color: white;
+    border-radius: 10px;
+    font-size: 15px;
+    border: none;
+}
+
+#agregar-comentario:hover{
+    background-color: var(--color-primario-dark);
+    cursor: pointer;
+}
+
+
+.comentarios form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    gap: 10px;
+    padding: 20px;
+    background-color: var(--color-secundario);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+}
+
+.comentarios form[hidden]{
+    display: none;
+}
+
+.comentarios form label{
+    font-weight: bold;
+    color: var(--color-primario);
+}
+
+.req {
+    color: red;
+}
+
+.comentarios form input, .comentarios form textarea{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #cbd5cb;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.comentarios form textarea{
+    min-height: 100px;
+    resize: vertical;
+}
+
+.comentarios input:focus, .comentarios textarea:focus{
+    outline: none;
+    border-color: var(--color-primario);
+}
+
+.comentarios form button{
+    padding: 10px 20px;
+    background-color: var(--color-primario);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.comentarios form button:hover{
+    background-color: var(--color-primario-dark);
+}
+
+.error{
+    color: red;
+    font-size: 13px;
+    display: none;
+}
+.error.visible{
+    display: block;
+}
+
+.comentarios .flashes{
+    width: 100%;
+    margin: 0;
+}
+
+.comentarios .flashes:empty{
+    display: none;
+}
+
+.comentario-box{
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.comentario-unico{
+    color: var(--color-primario);
+    background-color: var(--color-secundario);
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    border-left: 5px solid var(--color-primario-dark);
+}
+.comentario-unico strong{
+    color: var(--color-primario-dark);
 }

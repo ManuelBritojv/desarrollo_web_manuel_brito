@@ -32,20 +32,15 @@ region.addEventListener("change", function(){ // Logica del sistema Región-Comu
 // Validaciones del formulario
 // Funciones auxiliares.
 
+// Mejorada con regex ahora.
 /**
  * Funcion que revisa si un input de nombre, es un nombre válido.
  * @param {*} nombre Nombre a verificar
  * @returns Boolean
  */
-function esNombreValido(nombre){
-    const permitidos = new Set("abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúÁÉÍÓÚüÜ "); 
-    // Uso un set para tener un algoritmo O(1) en cada iteracion del ciclo for, hashMap.
-    for(let i = 0; i < nombre.length; i++){
-        if (!permitidos.has(nombre[i])){ // Si encontramos un caracter no permitido.
-            return false;
-        }
-    }
-    return true; // Con eso esta funcion trabaja en O(n).
+function esNombreValido(nombre) {
+    const regex = /^[a-zA-ZñÑ ]+$/;
+    return regex.test(nombre);
 }
 
 /**

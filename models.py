@@ -1,7 +1,7 @@
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 
-from sqlalchemy import ForeignKey, String
+from sqlalchemy import ForeignKey, String, select
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -62,6 +62,7 @@ class Avistamiento(Base):
     voluntario: Mapped['Voluntario'] = relationship(back_populates='avistamientos') # Un avistamiento fue hecho por un voluntario
     registros: Mapped[list['Registro']] = relationship(back_populates='avistamiento') # Un avistamiento puede tener muchos registros
     ave: Mapped['Ave'] = relationship(back_populates='avistamientos') # Un avistamiento vio una ave.
+    comentarios: Mapped[list['Comentario']] = relationship(back_populates='avistamiento') # Un avistamiento puede tener muchos comentarios
 
 
 class Registro(Base):
@@ -74,6 +75,17 @@ class Registro(Base):
     # Relaciones
     avistamiento : Mapped['Avistamiento'] = relationship(back_populates='registros') # Un registro pertenece a un avistamiento
 
+class Comentario(Base):
+    __tablename__ = 'comentario'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(80))
+    texto: Mapped[str] = mapped_column(String(300))
+    fecha: Mapped[datetime] = mapped_column()
+    avistamiento_id: Mapped[int] = mapped_column(ForeignKey('avistamiento.id'), nullable=False)
+
+    #Relaciones
+    avistamiento: Mapped['Avistamiento'] = relationship(back_populates='comentarios') # Un comentario pertenece a un avistamiento
 
 #--- Consultas ---
 
@@ -117,4 +129,26 @@ def agregar_avistamiento(session, voluntario_id, ave_id, fecha_hora, lugar, desc
         for ruta in guardados:
             if os.path.exists(ruta):
                 os.remove(ruta)
+        return None
+
+def obtener_comentarios(session, avistamiento_id):
+    return session.execute(
+        select(Comentario.nombre, Comentario.texto, Comentario.fecha)
+        .where(Comentario.avistamiento_id == avistamiento_id)
+        .order_by(Comentario.fecha.desc(), Comentario.id.desc())
+    ).all()
+
+def agregar_comentario(session, nombre, texto, avistamiento_id):
+    comentario = Comentario(
+        nombre=nombre,
+        texto=texto,
+        fecha=datetime.now(),
+        avistamiento_id=avistamiento_id
+    )
+    try:
+        session.add(comentario)
+        session.commit()
+        return comentario.id
+    except Exception as e:
+        session.rollback()
         return None

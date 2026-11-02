@@ -37,7 +37,7 @@ function dibujarGraficoBarras(volXComuna){
     Highcharts.chart('grafico-barras', {
         chart: {
             type: 'column',
-            backgroundColor: '#f8f9fa',
+            backgroundColor: '#f5f7f4',
         },
         title: {
             text: 'Voluntarios x Comuna',
@@ -89,7 +89,7 @@ function dibujarGraficoLineas(avistamientosxdia){
     Highcharts.chart('grafico-lineas',{
         chart:{
             type: 'line',
-            backgroundColor: '#f8f9fa',
+            backgroundColor: '#f5f7f4',
         },
         title: {
             text: 'Avistamientos por día',
@@ -120,7 +120,6 @@ function dibujarGraficoLineas(avistamientosxdia){
         plotOptions: {
             line: {
                 color: '#008f39',
-                borderRadius: 4,
                 borderWidth: 0,
             }
         },
@@ -141,7 +140,7 @@ function dibujarGraficoTorta(totalAves){
     Highcharts.chart('grafico-torta',{
         chart:{
             type: 'pie',
-            backgroundColor: '#f8f9fa',
+            backgroundColor: '#f5f7f4',
         },
         title: {
             text: 'Total de avistamientos por tipo de ave',

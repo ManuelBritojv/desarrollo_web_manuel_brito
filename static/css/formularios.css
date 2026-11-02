@@ -33,9 +33,9 @@ fieldset {
     display: flex;
     flex-direction: column;
     padding: 25px;
-    border: 2px solid var(--color-secundario);
+    border: 1px solid var(--color-border);
     border-radius: 15px;
-    background-color: #fcfcfc;
+    background-color: var(--color-secundario);
     gap: 10px;
 }
 

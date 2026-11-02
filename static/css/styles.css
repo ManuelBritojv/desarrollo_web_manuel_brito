@@ -4,7 +4,8 @@
 :root{
     --color-primario:#13a032;
     --color-primario-dark: #058120;
-    --color-secundario:#e2e0e0; 
+    --color-secundario:#f5f7f4; 
+    --color-border: #dce3dc;
 }
 
 
@@ -36,6 +37,7 @@ nav{
     align-items: center;
     background-color: var(--color-secundario);
     border-radius: 20px;
+    border: 1px solid var(--color-border);
     padding: 20px;
     width: 90%;
     max-width: 1200px;

@@ -69,10 +69,33 @@
         </section>
 
         <a class="boton-volver" href="{{ url_for('listado') }}">Volver al listado</a>
+
+    <section class="comentarios" id="comentarios" data-avistamiento-id="{{ avistamiento.id }}">
+        <h2>Últimos Comentarios</h2>
+        <ul id="mensajes-comentario" class="flashes"></ul>
+
+        <button type="button" id="agregar-comentario">Escribir comentario</button>
+
+        <form id="form-comentario" hidden>
+            <label for="nombre">Nombre <span class="req">(*)</span>:</label>
+            <input type="text" id="nombre" name="nombre" maxlength="50">
+            <span class="error" id="error-nombre">Ingrese un nombre válido (mín. 3 y máx. 50 caracteres).</span>
+
+            <label for="texto">Comentario <span class="req">(*)</span>:</label>
+            <textarea id="texto" name="texto" rows="3" cols="40" maxlength="300"></textarea>
+            <span class="error" id="error-texto">Ingrese un comentario válido (mín. 5 y máx. 300 caracteres).</span>
+
+            <button type="submit" id="enviar-comentario">Agregar comentario</button>
+        </form>
+
+        <ul id="lista-comentarios" class="comentario-box"></ul>
+        <p id="sin-comentarios" hidden>Aún no hay comentarios registrados para este avistamiento.</p>
+    </section>
     </main>
 
     <footer>
         <p>&copy; 2026 Unión de Ornitólogos de Chile. Todos los derechos reservados.</p>
     </footer>
+    <script src="{{ url_for('static', filename='js/detalle.js') }}"></script>
 </body>
 </html>
